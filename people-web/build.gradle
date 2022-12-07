@@ -1,0 +1,112 @@
+plugins {
+	//id 'java'
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java-library'
+}
+
+group = 'com.people'
+version = '0.0.1'
+sourceCompatibility = '18'
+targetCompatibility = '18'
+[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+
+repositories {
+	mavenCentral()
+    maven { url "https://repo.spring.io/libs-release" }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+
+jar {
+    // bootJar 대신에 jar 를 실행하도록 한다(일반 jar처럼 묶임)
+    enabled = true
+    archiveFileName = 'people-web.${version}.jar'
+    // manifest를 지정한다
+    manifest {
+        attributes 'Main-Class': 'com.people.PeopleWebApplication'
+    }
+
+    // people-common 에 필요한 라이브러리들을 모두 포함해서 패키징한다
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    // build 중에 중복되는 파일이 생성될경우 에러가 발생한다. 그것을 방지하기 위한 설정이다.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+dependencies {
+
+	//compile fileTree(dir: 'libs', include: '*.jar')
+    //api project(':people-common')
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.2.2' 
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools' 
+
+	//JMS ----------------------------------------------------------------------	
+	implementation 'org.springframework.boot:spring-boot-starter-artemis'
+	// https://mvnrepository.com/artifact/org.apache.activemq/artemis-server
+	implementation 'org.apache.activemq:artemis-server:2.27.0'
+	// https://mvnrepository.com/artifact/org.apache.activemq/activemq-broker
+	implementation 'org.apache.activemq:activemq-broker:5.17.2'
+	
+	// https://mvnrepository.com/artifact/org.apache.activemq/activemq-pool
+	implementation 'org.apache.activemq:activemq-pool:5.17.2'
+	//JMS ----------------------------------------------------------------------
+    
+	
+	
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    //VO를 String으로 출력하기 위해 추가 된 라이브러리
+    //api 'org.apache.httpcomponents:httpclient:4.5.7'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    
+    //암복호화 BASE64
+    implementation 'commons-codec:commons-codec:1.15'
+    
+    //MyBatis적용
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	
+	/* JSONParser, JSONObject설정 */
+	implementation 'com.googlecode.json-simple:json-simple:1.1'
+	
+	//XML 생성
+	// https://mvnrepository.com/artifact/org.jdom/jdom
+	implementation 'org.jdom:jdom:2.0.2'
+	
+	//MySQL 
+	runtimeOnly 'mysql:mysql-connector-java'
+	implementation 'mysql:mysql-connector-java'
+	
+	//Query Log
+	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
+	//implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+	//외부 restAPI 연동
+	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+	
+	//JMS
+	// https://mvnrepository.com/artifact/javax.jms/javax.jms-api
+	implementation 'javax.jms:javax.jms-api:2.0'
+	
+
+	
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

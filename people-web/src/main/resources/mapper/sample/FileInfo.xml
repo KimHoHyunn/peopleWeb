@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.people.sample.restfile.FileInfoDao">
+	
+    <select id="getFileInfo" parameterType="String" resultType="com.people.common.vo.FileVO">
+		select   #{fid} as fid
+		       , 'd:/dev/files/etc/2022/12/6' as filePath
+		       , 'text/plain' as fileType
+		       , 'sts튜닝.txt' as originalFileName
+		       , '04bc165c-b74d-4e71-ba25-be79749077f3.txt' as saveFileName
+		       , 'txt' as fileExt 
+    </select>
+ 
+</mapper>

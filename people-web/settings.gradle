@@ -1,0 +1,4 @@
+//rootProject.name = 'people-web'
+
+rootProject.name = 'people-web'
+include 'people-common'

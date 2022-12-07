@@ -1,0 +1,32 @@
+<!--
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM>
+    <level value="trace" />
+    </logger>uration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+ 
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%-5p][%d] [%F:%L] %m%n" />
+        </layout>
+    </appender>
+
+    <appender name="LOGFILE-DAILY" class="org.apache.log4j.DailyRollingFileAppender">
+    	<param name="file" value="/shblog/next_eds/img/nextImgDaemon.log" />
+    	<param name="Append" value="true" />
+    	<param name="DataPattern" value=".yyyy-MM-dd-HH"/>
+    	
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{HH:mm:ss,SSS}][%-5p][%15.15t] %m%n" />
+        </layout>
+    </appender>    // Root Logger 
+    <root>
+        <priority value="DEBUG" />
+        
+        <appender-ref ref="console" />
+        <appender-ref ref="LOGFILE-DAILY" />
+    </root>
+    
+</log4j:configuration>
+ -->

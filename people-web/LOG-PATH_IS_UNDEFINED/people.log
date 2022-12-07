@@ -1,0 +1,6 @@
+2022-12-02 13:11:02,848 INFO com.people.PeopleWebApplication [restartedMain] Starting PeopleWebApplication using Java 18.0.2.1 on 호빵 with PID 1732 (D:\dev\workspace\people-web\bin\main started by mh042 in D:\dev\workspace\people-web)
+2022-12-02 13:11:02,849 DEBUG com.people.PeopleWebApplication [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-12-02 13:11:02,850 INFO com.people.PeopleWebApplication [restartedMain] The following 1 profile is active: "local"
+2022-12-02 13:11:03,942 INFO com.people.common.config.JmsBrokerConfig [restartedMain] com.people.common.config.JmsBrokerConfig$$EnhancerBySpringCGLIB$$2c930536.jmsTemplate() 0
+2022-12-02 13:11:04,873 INFO com.people.PeopleWebApplication [restartedMain] Started PeopleWebApplication in 2.383 seconds (JVM running for 2.911)
+2022-12-02 13:11:48,830 INFO com.people.common.config.AsyncConfig [http-nio-8080-exec-3] 활성 Task 수 :::: 0
