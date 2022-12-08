@@ -14,7 +14,6 @@ targetCompatibility = '18'
 
 repositories {
 	mavenCentral()
-    maven { url "https://repo.spring.io/libs-release" }
 }
 
 dependencyManagement {
