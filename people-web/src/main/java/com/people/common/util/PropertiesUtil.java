@@ -1,4 +1,4 @@
-package com.people.common.oldutil;
+package com.people.common.util;
 
 import java.io.IOException;
 

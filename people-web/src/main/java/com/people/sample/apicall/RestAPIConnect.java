@@ -19,10 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.PropertiesUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.util.CommonUtil;
+import com.people.common.util.FileUtil;
+import com.people.common.util.PropertiesUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class RestAPIConnect {
 	
 	@Autowired PropertiesUtil propertiesUtil;
+	@Autowired CommonUtil commonUtil;
+	@Autowired FileUtil fileUtil;
 	
     private String getBase64String(MultipartFile multipartFile) throws Exception {
         byte[] bytes = multipartFile.getBytes();
@@ -56,10 +57,10 @@ public class RestAPIConnect {
 			fileData = baos.toByteArray();
 			
     	}catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(commonUtil.getExceptionLog(e));
 		}finally {
-			if(CommonUtil.isNotEmpty(fis)) { try {fis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(baos)) { try {fis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(commonUtil.isNotEmpty(fis)) { try {fis.close();} catch(IOException e) {log.error(commonUtil.getExceptionLog(e));}}
+			if(commonUtil.isNotEmpty(baos)) { try {fis.close();} catch(IOException e) {log.error(commonUtil.getExceptionLog(e));}}
 		}
 
         return fileData;
@@ -109,7 +110,7 @@ public class RestAPIConnect {
         parameters.add("image", imageFileString);
         
         File pFile = new File(file.getOriginalFilename());
-        parameters.add("imageByte", FileUtil.toBinaryString(pFile));
+        parameters.add("imageByte", fileUtil.toBinaryString(pFile));
 
         // Message
         HttpEntity<?> requestMessage = new HttpEntity<>(parameters, headers);

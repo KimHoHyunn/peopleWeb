@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.people.common.config.CustomPropertyConfig;
 import com.people.common.oldutil.CommonUtil;
 import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.PropertiesUtil;
+import com.people.common.util.PropertiesUtil;
 
 @RestController
 public class PropertiesController {

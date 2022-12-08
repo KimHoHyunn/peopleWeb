@@ -1,7 +1,8 @@
-package com.people.common.oldutil;
+package com.people.common.util;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 //유틸 클래스이니 상속이나 인스턴스 생성을 막기위해 private scope의 기본생성자를 만들어둡니다.
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ApiUtil {
-	public static ApiResponseVO post(ApiVO apiVO) throws JsonMappingException, JsonProcessingException {
+	
+	@Autowired CommonUtil commonUtil;
+	
+	public ApiResponseVO post(ApiVO apiVO) throws JsonMappingException, JsonProcessingException {
 		// 헤더 만들기
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -56,7 +60,7 @@ public class ApiUtil {
 		// 전달받은 데이터를 gson 라이브러리를 사용해서 바로 매핑시킬 수 있음
 		ApiResponseVO apiResponseVO = new ApiResponseVO();
 		
-		if(CommonUtil.isEmpty(apiVO.getAa())) {
+		if(commonUtil.isEmpty(apiVO.getAa())) {
 			apiResponseVO.setHttpStatus(HttpStatus.BAD_REQUEST.value());
 			apiResponseVO.setResponseBody(null);
 		} else {		
