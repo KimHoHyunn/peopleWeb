@@ -9,15 +9,13 @@ import lombok.Setter;
 @Setter
 @Getter
 public class FileVO {
-	private String fid   		;
+	private int    fid   		;
 	private String origin_name	;
 	private String save_name	;
 	private String save_path	;
 	private String content_type	;
 	private String extension	;
 	private long   size         ;
-	private String reg_user		;
-	private String reg_dttm		;
 
 
 

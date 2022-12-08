@@ -278,7 +278,7 @@ public class FileUtil {
 		
 		String path = joinPaths(baseDir, fileKind, yyyy, mm, dd, fileName).getPath();
 		
-		return path;
+		return commonUtil.safeReplace(path, "\\", "/");
 	}
 	
 	public FileVO saveFile(MultipartFile originalFile) throws IllegalStateException, IOException, InterruptedException {
@@ -307,11 +307,13 @@ public class FileUtil {
     	
     	String basePath = propertiesUtil.getFileRootPath();
     	log.info("--- basePath     = "+ basePath);
-       	String saveFilePath = makePath(basePath, PATH.FILE.toString(), saveFileName+"."+fileExt);
+       	String subPath = "/" + makePath(PATH.FILE.toString(),"", "");
+    	log.info("--- subPath     = "+ subPath);
+       	String saveFilePath =basePath+subPath+"/"+saveFileName+"."+fileExt;
        	log.info("--- saveFilePath = "+ saveFilePath);
        	
        	File targetFile = new File(saveFilePath);
-       	fileVO.setSave_path(commonUtil.safeReplace(commonUtil.safeReplace(targetFile.getParent(), "\\", "/"),basePath,""));
+       	fileVO.setSave_path(subPath);
        	log.info("--- getParent = "+ fileVO.getSave_path());
        	create(originalFile, targetFile);
        	

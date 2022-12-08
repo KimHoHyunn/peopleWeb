@@ -34,4 +34,13 @@ public class FileUpDownController {
 	public ResponseEntity<?> downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable String fid) throws Exception {
 		return fileUpDownService.fileDownload(request, fid);
 	}
+	
+	@PostMapping("/file/info/{fid}")
+	public ResponseVO fileInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String fid) throws Exception {
+		ResponseVO responseVO = new ResponseVO(ErrorCode.OK); 
+		
+		log.info("responseVO = {}", responseVO.toStringJson());
+		responseVO.setResultData("fileInfo",fileUpDownService.getFileInfo(fid));
+		return responseVO;
+	}
 }

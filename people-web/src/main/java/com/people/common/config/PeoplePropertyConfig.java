@@ -7,8 +7,8 @@ import org.springframework.context.annotation.PropertySources;
 @Configuration
 @PropertySources({
 	@PropertySource("classpath:config/common-${spring.profiles.active}.properties")
-	, @PropertySource("classpath:config/custom-${spring.profiles.active}.properties")
+	, @PropertySource("classpath:config/people-${spring.profiles.active}.properties")
 })
-public class CustomPropertyConfig {
+public class PeoplePropertyConfig {
 
 }

@@ -9,7 +9,8 @@
 		 where fid = #{fid}
     </select>
     
-    <insert id="insertFileInfo" parameterType="com.people.common.vo.FileVO">
+    <insert id="insertFileInfo" parameterType="com.people.common.vo.FileVO" useGeneratedKeys="true"
+        keyProperty="fid" keyColumn="fid">
     	insert 
     	  into file_info 
     	       (

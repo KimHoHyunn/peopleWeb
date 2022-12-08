@@ -54,4 +54,9 @@ public class FileUpDownService {
 
 		return fileUtil.fileDownload(request, fileVO);
 	}
+	
+	public FileVO getFileInfo(String fid) throws Exception{
+		//데이터베이스에서 파일 관련 데이터를 가져온다.
+		return fileInfoDao.getFileInfo(fid);
+	}
 }
