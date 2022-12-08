@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.people.common.consts.MessageType;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.vo.MessageVO;
 
 import lombok.extern.slf4j.Slf4j;

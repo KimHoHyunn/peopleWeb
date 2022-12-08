@@ -3,9 +3,9 @@ package com.people.card.itf;
 import java.util.Map;
 
 import com.people.common.dao.EdsDao;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.step.EDocProcStep;
-import com.people.common.util.CommonUtil;
-import com.people.common.util.SystemUtil;
 import com.people.common.vo.ConfigVO;
 import com.people.card.ctr.CardMainCtr;
 

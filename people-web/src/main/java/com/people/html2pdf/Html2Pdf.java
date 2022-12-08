@@ -7,8 +7,8 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.people.common.util.CommonUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.SystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 /**

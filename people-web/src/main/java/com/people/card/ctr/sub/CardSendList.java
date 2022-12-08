@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.people.card.dao.DaoSelect;
 import com.people.card.dao.DaoUpdate;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.step.EDocProcStep;
-import com.people.common.util.CommonUtil;
-import com.people.common.util.SystemUtil;
 import com.people.common.vo.SndRstVO;
 
 import lombok.extern.slf4j.Slf4j;

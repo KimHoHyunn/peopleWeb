@@ -5,10 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.people.common.util.CommonUtil;
-import com.people.common.util.FileUtil;
-import com.people.common.util.InfCreateUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.FileUtil;
+import com.people.common.oldutil.InfCreateUtil;
+import com.people.common.oldutil.SystemUtil;
 
 import lombok.Getter;
 import lombok.Setter;

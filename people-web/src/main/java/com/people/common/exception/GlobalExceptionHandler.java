@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.vo.ErrorVO;
 
 @RestControllerAdvice

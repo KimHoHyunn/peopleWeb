@@ -1,4 +1,4 @@
-package com.people.common.util;
+package com.people.common.oldutil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

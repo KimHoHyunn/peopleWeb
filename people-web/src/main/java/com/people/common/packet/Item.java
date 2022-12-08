@@ -1,6 +1,6 @@
 package com.people.common.packet;
 
-import com.people.common.util.CommonUtil;
+import com.people.common.oldutil.CommonUtil;
 
 import lombok.Getter;
 import lombok.Setter;

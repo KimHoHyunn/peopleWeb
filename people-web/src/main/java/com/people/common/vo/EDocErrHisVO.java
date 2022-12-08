@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.util.CommonUtil;
+import com.people.common.oldutil.CommonUtil;
 
 import lombok.Getter;
 

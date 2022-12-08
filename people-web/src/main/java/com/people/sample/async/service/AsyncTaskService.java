@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.sample.async.dao.AsyncDao;
 import com.people.sample.jms.producer.ArtemisProducer;
 

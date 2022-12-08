@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.people.common.consts.ErrorCode;
 import com.people.common.exception.CustomException;
-import com.people.common.util.ApiUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.ApiUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.vo.ApiResponseVO;
 import com.people.common.vo.ApiVO;
 import com.people.common.vo.ResponseVO;

@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.people.bpr.crt.sub.BprSendList;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.SystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

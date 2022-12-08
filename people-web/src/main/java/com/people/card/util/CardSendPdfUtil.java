@@ -14,9 +14,9 @@ import org.json.simple.parser.JSONParser;
 
 import com.people.card.packet.CardPdfRecvPacket;
 import com.people.card.packet.CardPdfSendPacket;
-import com.people.common.util.CommonUtil;
-import com.people.common.util.FileUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.FileUtil;
+import com.people.common.oldutil.SystemUtil;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

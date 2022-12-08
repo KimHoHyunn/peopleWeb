@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.util.CommonUtil;
+import com.people.common.oldutil.CommonUtil;
 import com.people.common.vo.ConfigVO;
 import com.people.card.dao.DaoSelect;
 

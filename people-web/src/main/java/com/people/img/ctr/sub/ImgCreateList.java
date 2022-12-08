@@ -8,8 +8,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import com.people.common.util.CommonUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.vo.DirFileVO;
 
 import lombok.extern.slf4j.Slf4j;

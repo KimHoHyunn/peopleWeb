@@ -19,10 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.people.common.util.CommonUtil;
-import com.people.common.util.FileUtil;
-import com.people.common.util.PropertiesUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.FileUtil;
+import com.people.common.oldutil.PropertiesUtil;
+import com.people.common.oldutil.SystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

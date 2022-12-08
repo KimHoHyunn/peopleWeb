@@ -2,7 +2,7 @@ package com.people.common.step;
 
 import java.util.Map;
 
-import com.people.common.util.CommonUtil;
+import com.people.common.oldutil.CommonUtil;
 import com.people.common.vo.ConfigVO;
 
 import lombok.Getter;

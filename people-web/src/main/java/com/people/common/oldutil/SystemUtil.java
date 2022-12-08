@@ -1,4 +1,4 @@
-package com.people.common.util;
+package com.people.common.oldutil;
 
 import java.io.File;
 import java.io.FileInputStream;

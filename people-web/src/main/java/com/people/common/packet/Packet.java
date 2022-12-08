@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.people.common.util.CommonUtil;
+import com.people.common.oldutil.CommonUtil;
 
 /**
  * 공통전문조립

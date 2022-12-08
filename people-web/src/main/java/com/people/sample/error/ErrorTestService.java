@@ -2,7 +2,7 @@ package com.people.sample.error;
 
 import org.springframework.stereotype.Service;
 
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.SystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

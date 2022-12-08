@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.util.CommonUtil;
-import com.people.common.util.FileUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.FileUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.vo.DirFileVO;
 import com.people.img.dao.DaoSelect;
 import com.people.img.dao.DaoUpdate;

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.people.common.consts.ErrorCode;
-import com.people.common.util.FileUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.FileUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.vo.FileVO;
 import com.people.common.vo.ResponseVO;
 

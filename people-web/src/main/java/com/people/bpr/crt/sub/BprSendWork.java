@@ -19,9 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.people.bpr.dao.DaoUpdate;
 import com.people.bpr.util.BprInfCreateUtil;
 import com.people.common.dao.EdsDao;
-import com.people.common.util.CommonUtil;
-import com.people.common.util.FileUtil;
-import com.people.common.util.SystemUtil;
+import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.FileUtil;
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.vo.EDocErrHisVO;
 import com.people.common.vo.SndRstVO;
 

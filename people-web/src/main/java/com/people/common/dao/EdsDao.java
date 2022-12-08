@@ -6,8 +6,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import com.people.common.oldutil.SystemUtil;
 import com.people.common.step.EDocProcStep;
-import com.people.common.util.SystemUtil;
 import com.people.common.vo.EDocErrHisVO;
 
 public class EdsDao {
