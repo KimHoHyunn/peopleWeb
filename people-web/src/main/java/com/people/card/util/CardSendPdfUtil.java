@@ -27,7 +27,7 @@ public class CardSendPdfUtil {
 	private final int serverPort;
 	
 	public CardSendPdfUtil() throws IOException {
-		Properties props = SystemUtil.getConfigProperties();
+		Properties props = new Properties();//SystemUtil.getConfigProperties();
 		serverIp = props.getProperty("PPR_CARD_SERVER_IP");
 		serverPort = CommonUtil.safeObjToInt(props.getProperty("PPR_CARD_SERVER_PORT"));
 	}

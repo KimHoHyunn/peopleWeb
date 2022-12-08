@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CardSendCtr {
 	public void procJobMain(Map<String, Object > eDocInfo, int threadPoolSize) {
 		try {
-			Properties props = SystemUtil.getConfigProperties();
+			Properties props = new Properties();//SystemUtil.getConfigProperties();
 			
 			CardSendList cardSendList = new CardSendList(eDocInfo, props, threadPoolSize);
 			cardSendList.workJobList();

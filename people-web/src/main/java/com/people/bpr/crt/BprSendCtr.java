@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BprSendCtr {
 	public void procJobMain(Map<String, Object> eDocInfo, int threadPoolSize, String bprSendG) {
 		try {
-			Properties props = SystemUtil.getConfigProperties();
+			Properties props = new Properties();// SystemUtil.getConfigProperties();
 			BprSendList bsList = new BprSendList(eDocInfo, props, threadPoolSize, bprSendG);
 			bsList.workJobList();
 		} catch (Exception e) {

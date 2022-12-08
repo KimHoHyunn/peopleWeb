@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.Base64;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,12 +21,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.people.common.util.CommonUtil;
 import com.people.common.util.FileUtil;
+import com.people.common.util.PropertiesUtil;
 import com.people.common.util.SystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class RestAPIConnect {
+	
+	@Autowired PropertiesUtil propertiesUtil;
 	
     private String getBase64String(MultipartFile multipartFile) throws Exception {
         byte[] bytes = multipartFile.getBytes();
@@ -88,8 +92,7 @@ public class RestAPIConnect {
 		
         RestTemplate restTemplate = new RestTemplate();
         
-        Properties props = SystemUtil.getConfigProperties();
-        String url = props.getProperty("REAT_APT_URL");
+        String url = propertiesUtil.getReatAptUrl();
         
         String imageFileString = getBase64String(file);
 

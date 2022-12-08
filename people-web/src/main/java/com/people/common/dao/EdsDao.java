@@ -38,7 +38,7 @@ public class EdsDao {
 	public static void setDataSource() throws Exception {
 		
 		
-		Properties props = SystemUtil.getCommonProperties();
+		Properties props = new Properties();//SystemUtil.getCommonProperties();
 		
 		//호스트이름가져오기
 		String hostName = SystemUtil.getHostName().toUpperCase();

@@ -24,7 +24,7 @@ public class CardSendUtil {
 	private final String ecmIP;
 	
 	public CardSendUtil() throws IOException{
-		Properties props = SystemUtil.getConfigProperties();
+		Properties props = new Properties();//SystemUtil.getConfigProperties();
 		
 		serverIP = props.getProperty("SERVER_CARD_IP");
 		serverPort = CommonUtil.safeObjToInt(props.get("SERVER_CARD_PORT"));

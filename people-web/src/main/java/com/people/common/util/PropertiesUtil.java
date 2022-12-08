@@ -1,17 +1,11 @@
 package com.people.common.util;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
-import javax.servlet.ServletContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -20,19 +14,29 @@ import lombok.extern.slf4j.Slf4j;
  * @author mh042
  *
  */
-@Slf4j
-@Configuration
+@Component
 public class PropertiesUtil {
+	@Autowired Environment env;
 	
-	public String getFileBasePath () throws IOException {
-
-		Properties prop = new Properties();
-		
-		try {
-		    prop.load(new FileInputStream("D:\\dev\\workspace\\people-web\\bin\\main\\config\\common.properties"));
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-		return prop.getProperty("file.root.dir");
+	private String getProperties (String name) throws IOException {
+		return env.getRequiredProperty(name);
 	}
+	
+	public String getCommonPropIs () throws IOException {
+		return getProperties("common.prop.is");
+	}
+	
+	public String getFileRootPath () throws IOException {
+		return getProperties("file.root.dir");
+	}
+	
+	public String getCustomPropIs () throws IOException {
+		return getProperties("custom.prop.is");
+	}
+	
+	public String getReatAptUrl() throws IOException {
+		return getProperties("REAT_APT_URL");
+	}
+	
+	
 }

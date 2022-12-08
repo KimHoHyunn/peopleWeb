@@ -39,7 +39,7 @@ public class Html2Pdf {
 		String rootPath = req.getSession().getServletContext().getRealPath("/");
 		String localhotnm = SystemUtil.getHostName();
 		
-		Properties props = SystemUtil.getConfigProperties();
+		Properties props = new Properties();//SystemUtil.getConfigProperties();
 		String basePath = props.getProperty("PDF_BASEPATH"); //tmp pdf 파일 저정 경로
 		String PDF_LOGPATH = props.getProperty("PDF_LOGPATH"); //로그파일 경로
 		
@@ -68,7 +68,7 @@ public class Html2Pdf {
 			throw new Exception("license path wrong~");
 		} 
 		
-		Properties props = SystemUtil.getConfigProperties();
+		Properties props = new Properties();//SystemUtil.getConfigProperties();
 		
 		
 	

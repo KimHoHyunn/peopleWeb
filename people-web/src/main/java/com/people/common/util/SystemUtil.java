@@ -79,24 +79,7 @@ public class SystemUtil {
 	}
 	
 	
-	
-	public static final Properties getCommonProperties() throws IOException {
-		//PEOPLE-COMMON-PATH은 jar 시작할 때 지정해주는 값이다. shell 참조
-		//예 : 
-		//#Common Path
-		//export NEXT_EDS_COMMON_PATH = ${NEXT_EDS_PATH}/next_eds_common
-		//File file = FileUtil.joinPaths(System.getenv("PEOPLE-COMMON-PATH"), FileUtil.PATH.CONFIG, "common.properties");
-		File file = FileUtil.joinPaths("D://dev//", FileUtil.PATH.CONFIG, "common.properties");
-		
-		return getProperties(file);
-	}
-	
-	public static final Properties getConfigProperties() throws IOException {
-//		File file = FileUtil.joinPaths(System.getProperty("NEXT_EDS_COMMON_PATH"), FileUtil.PATH.CONFIG, "config.properties");
-		File file = FileUtil.joinPaths("", FileUtil.PATH.CONFIG, "config.properties");
-		return getProperties(file);
-	}
-	
+
 	private static final Properties getProperties(File file) throws IOException {
 		FileInputStream fis = new FileInputStream(file);
 		Properties properties = new Properties();

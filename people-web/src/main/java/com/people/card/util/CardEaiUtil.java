@@ -48,7 +48,7 @@ public class CardEaiUtil {
 		//1 EAI Config 정보 가져오기
 		Properties props = null;
 		try {
-			props = SystemUtil.getConfigProperties();
+			props = new Properties();//SystemUtil.getConfigProperties();
 		} catch (Exception e) {
 			return null;
 		}

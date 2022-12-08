@@ -18,6 +18,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -275,6 +276,17 @@ public class FileUtil {
 		
 		return path;
 	}
+	
+	public static String basePath = "d:/dev/files";
+//	@Autowired PropertiesUtil propertiesUtil;
+//	public void setBasePath() {
+//		try {
+//			basePath = propertiesUtil.getFileRootPath();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	public static FileVO saveFile(MultipartFile originalFile) throws IllegalStateException, IOException, InterruptedException {
 		
@@ -296,10 +308,8 @@ public class FileUtil {
     	fileVO.setSaveFileName(saveFileName+"."+fileExt);
     	log.info("--- saveFileName = "+ saveFileName);
     	
-    	PropertiesUtil propertiesUtil = new PropertiesUtil();
-    	String basePath = propertiesUtil.getFileBasePath();
     	log.info("--- basePath     = "+ basePath);
-       	String saveFilePath = makePath(basePath, PATH.FILE.toString(), saveFileName+"."+fileExt).replace("\\","/");
+       	String saveFilePath = makePath(basePath, PATH.FILE.toString(), saveFileName+"."+fileExt);
        	log.info("--- saveFilePath = "+ saveFilePath);
        	
        	File targetFile = new File(saveFilePath);
