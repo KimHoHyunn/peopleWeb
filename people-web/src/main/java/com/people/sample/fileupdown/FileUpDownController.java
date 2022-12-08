@@ -4,8 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +22,7 @@ public class FileUpDownController {
 	@Autowired FileUpDownService fileUpDownService; 
 	
 	@PostMapping("/file/up")
-	public ResponseEntity<ResponseVO> uploadFile(MultipartFile multipartFile) {
+	public ResponseEntity<ResponseVO> uploadFile(MultipartFile multipartFile) throws Exception {
 		ResponseVO responseVO = new ResponseVO(ErrorCode.OK); 
 		
 		fileUpDownService.fileUpload(responseVO, multipartFile);
@@ -33,11 +31,7 @@ public class FileUpDownController {
 	}
 	
 	@GetMapping("/file/down/{fid}")
-	public ResponseEntity<?> downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable String fid) {
-		try {
-			return fileUpDownService.fileDownload(request, fid);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, null, HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable String fid) throws Exception {
+		return fileUpDownService.fileDownload(request, fid);
 	}
 }

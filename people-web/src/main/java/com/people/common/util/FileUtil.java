@@ -283,22 +283,26 @@ public class FileUtil {
 	
 	public FileVO saveFile(MultipartFile originalFile) throws IllegalStateException, IOException, InterruptedException {
 		
+		log.debug("originalFile = {}", originalFile.getSize());
+		
 		FileVO fileVO = new FileVO();
 		
+		fileVO.setSize(originalFile.getSize());
+		
     	String originalFileName = originalFile.getOriginalFilename();
-    	fileVO.setOriginalFileName(originalFileName);
+    	fileVO.setOrigin_name(originalFileName);
         log.debug("file org name = {}", originalFileName);
         
         String originalFileType = originalFile.getContentType();
-        fileVO.setFileType(originalFileType);
+        fileVO.setContent_type(originalFileType);
         log.debug("file content type = {}", originalFile.getContentType());
         
         String fileExt = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-        fileVO.setFileExt(fileExt);
+        fileVO.setExtension(fileExt);
         log.debug("file extension = {}", fileExt);
         
     	String saveFileName = createFileName();
-    	fileVO.setSaveFileName(saveFileName+"."+fileExt);
+    	fileVO.setSave_name(saveFileName+"."+fileExt);
     	log.info("--- saveFileName = "+ saveFileName);
     	
     	String basePath = propertiesUtil.getFileRootPath();
@@ -307,62 +311,70 @@ public class FileUtil {
        	log.info("--- saveFilePath = "+ saveFilePath);
        	
        	File targetFile = new File(saveFilePath);
-       	fileVO.setFilePath(targetFile.getParent().replace("\\","/"));
-       	log.info("--- getParent = "+ fileVO.getFilePath());
+       	fileVO.setSave_path(commonUtil.safeReplace(commonUtil.safeReplace(targetFile.getParent(), "\\", "/"),basePath,""));
+       	log.info("--- getParent = "+ fileVO.getSave_path());
        	create(originalFile, targetFile);
        	
        	return fileVO;
 	}
 	
 	public ResponseEntity<?> fileDownload(HttpServletRequest request, FileVO fileVO) throws Exception{
-		HttpHeaders headers = new HttpHeaders();
-
-//			contentType = Files.probeContentType(path);
-//			headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-//			headers.setContentDisposition(ContentDisposition.builder("attachment")
-//					                                        .filename(fileVO.getOriginalFileName(), StandardCharsets.UTF_8)
-//					                                        .build());
-		
-		String userAgent = request.getHeader("User-Agent");
-		boolean isBrowser = false;
-
-		String encordedFilename = fileVO.getOriginalFileName();
-		String attachment       = "";
-		if(userAgent.contains("Edge")) {
-			isBrowser = true;
-			encordedFilename = URLEncoder.encode(encordedFilename,"UTF-8").replace("\\+", "%20");
-			attachment = "attachment;filename=\""+encordedFilename;
-		} else if(userAgent.contains("MSIE") || userAgent.contains("Trident")  ) {
-			isBrowser = true;
-			encordedFilename = URLEncoder.encode(encordedFilename,"UTF-8").replace("\\+", "%20");
-			attachment = "attachment;filename=\""+encordedFilename;
-		} else if(userAgent.contains("Chrome")  ) {
-			isBrowser = true;
-			encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
-			attachment = "attachment;filename="+encordedFilename;		
-		} else if(userAgent.contains("Firefox")  ) {
-			isBrowser = true;
-			encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
-			attachment = "attachment;filename="+encordedFilename;	
-		} else if(userAgent.contains("Postman")  ) {
-			isBrowser = true;
-			encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
-			attachment = "attachment;filename="+fileVO.getSaveFileName();
-//		} else {
-//			throw new CustomException(ErrorCode.BROWSER_NOT_FOUND);
-		}
-		
-		if(isBrowser) {
-			headers.add("Content-Disposition", attachment);
-			headers.add("Content-Type", "application/octet-stream");                
-			headers.add("Content-Transfer-Encoding", "binary;");
-			headers.add("Pragma", "no-cache;");
-			headers.add("Expires", "-1;");
-			Path path = Paths.get(fileVO.getFilePath() + "/" + fileVO.getSaveFileName());
-			Resource resource = new InputStreamResource(Files.newInputStream(path));
-			return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+		if(commonUtil.isNotEmpty(fileVO)) {
+			HttpHeaders headers = new HttpHeaders();
+	
+	//			contentType = Files.probeContentType(path);
+	//			headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+	//			headers.setContentDisposition(ContentDisposition.builder("attachment")
+	//					                                        .filename(fileVO.getOriginalFileName(), StandardCharsets.UTF_8)
+	//					                                        .build());
+			
+			String userAgent = request.getHeader("User-Agent");
+			boolean isBrowser = false;
+	
+			String encordedFilename = fileVO.getOrigin_name();
+			String attachment       = "";
+			if(userAgent.contains("Edge")) {
+				isBrowser = true;
+				encordedFilename = URLEncoder.encode(encordedFilename,"UTF-8").replace("\\+", "%20");
+				attachment = "attachment;filename=\""+encordedFilename;
+			} else if(userAgent.contains("MSIE") || userAgent.contains("Trident")  ) {
+				isBrowser = true;
+				encordedFilename = URLEncoder.encode(encordedFilename,"UTF-8").replace("\\+", "%20");
+				attachment = "attachment;filename=\""+encordedFilename;
+			} else if(userAgent.contains("Chrome")  ) {
+				isBrowser = true;
+				encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
+				attachment = "attachment;filename="+encordedFilename;		
+			} else if(userAgent.contains("Firefox")  ) {
+				isBrowser = true;
+				encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
+				attachment = "attachment;filename="+encordedFilename;	
+			} else if(userAgent.contains("Postman")  ) {
+				isBrowser = true;
+				encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
+				attachment = "attachment;filename="+fileVO.getSave_name();
+	//		} else {
+	//			throw new CustomException(ErrorCode.BROWSER_NOT_FOUND);
+			}
+			
+			log.info("download file db path = {}", fileVO.getSave_path());
+			fileVO.setSave_path(propertiesUtil.getFileRootPath()+fileVO.getSave_path());
+			log.info("download file full path = {}", fileVO.getSave_path());
+			
+			if(isBrowser) {
+				headers.add("Content-Disposition", attachment);
+				headers.add("Content-Type", "application/octet-stream");                
+				headers.add("Content-Transfer-Encoding", "binary;");
+				headers.add("Pragma", "no-cache;");
+				headers.add("Expires", "-1;");
+				Path path = Paths.get(fileVO.getSave_path() + "/" + fileVO.getSave_name());
+				Resource resource = new InputStreamResource(Files.newInputStream(path));
+				return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+			} else {
+				throw new CustomException(ErrorCode.BROWSER_NOT_FOUND);
+			}
 		} else {
-			throw new CustomException(ErrorCode.BROWSER_NOT_FOUND);
+			throw new CustomException(ErrorCode.FILEDATA_NOT_FOUND);
 		}
 	}
 }

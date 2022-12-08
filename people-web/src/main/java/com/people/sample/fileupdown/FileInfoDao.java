@@ -7,4 +7,5 @@ import com.people.common.vo.FileVO;
 @Repository("FileInfoDao")
 public interface FileInfoDao {
 	public FileVO getFileInfo(String fid) ;
+	public int insertFileInfo(FileVO fileVO);
 }

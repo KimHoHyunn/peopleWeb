@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.util.CommonUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,14 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class RestApiController {
 	
-	@Autowired private RestApiService restApiService;
+	@Autowired RestApiService restApiService;
+	@Autowired CommonUtil commonUtil; 
 
 	@GetMapping(path = "/rest/get")
     public ResponseEntity<?>  restApiGet(String aa, String bb) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(OldCommonUtil.isNotEmpty(aa)) params.put("aa",aa);
-		if(OldCommonUtil.isNotEmpty(bb)) params.put("bb",bb);
+		if(commonUtil.isNotEmpty(aa)) params.put("aa",aa);
+		if(commonUtil.isNotEmpty(bb)) params.put("bb",bb);
 		
 		List<Map<String, Object>> ret = restApiService.getData(params);
 
@@ -62,8 +63,8 @@ public class RestApiController {
 		log.info(new Object() {}.getClass().getEnclosingMethod().getName());
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(OldCommonUtil.isNotEmpty(aa)) params.put("aa",aa);
-		if(OldCommonUtil.isNotEmpty(bb)) params.put("bb",bb);
+		if(commonUtil.isNotEmpty(aa)) params.put("aa",aa);
+		if(commonUtil.isNotEmpty(bb)) params.put("bb",bb);
 		List<Map<String, Object>> ret = restApiService.getData(params);
 		
 		return ResponseEntity.ok().body(ret);
@@ -73,8 +74,8 @@ public class RestApiController {
     public ResponseEntity<?>  restApiVoParam(RestApiVO restApiVO) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(OldCommonUtil.isNotEmpty(restApiVO.getAa())) params.put("aa",restApiVO.getAa());
-		if(OldCommonUtil.isNotEmpty(restApiVO.getBb())) params.put("bb",restApiVO.getBb());
+		if(commonUtil.isNotEmpty(restApiVO.getAa())) params.put("aa",restApiVO.getAa());
+		if(commonUtil.isNotEmpty(restApiVO.getBb())) params.put("bb",restApiVO.getBb());
 		List<Map<String, Object>> ret = restApiService.getData(params);
 		
 		return ResponseEntity.ok().body(ret);

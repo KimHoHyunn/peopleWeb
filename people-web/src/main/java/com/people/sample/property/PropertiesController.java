@@ -2,19 +2,14 @@ package com.people.sample.property;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.people.common.config.CustomPropertyConfig;
-import com.people.common.oldutil.OldCommonUtil;
-import com.people.common.oldutil.OldFileUtil;
+import com.people.common.util.FileUtil;
 import com.people.common.util.PropertiesUtil;
 
 @RestController
@@ -25,8 +20,9 @@ public class PropertiesController {
 //    
 //    @Value("${custom.prop.is}")
 //    private String customProp;
-    
+
     @Autowired PropertiesUtil propertiesUtil;
+    @Autowired FileUtil fileUtil;
 	
 	
 	@GetMapping(path = "/prop/test")
@@ -37,7 +33,7 @@ public class PropertiesController {
 		try {
 			ret.add(propertiesUtil.getCommonPropIs());
 			ret.add(propertiesUtil.getCustomPropIs());
-			ret.add(OldFileUtil.basePath);
+			ret.add(propertiesUtil.getFileRootPath());
 			return ResponseEntity.ok().body(ret);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

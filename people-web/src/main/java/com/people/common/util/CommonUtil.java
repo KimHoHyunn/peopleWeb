@@ -1,5 +1,7 @@
 package com.people.common.util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -175,6 +177,22 @@ public final class CommonUtil {
 	public String nowTime(String pattern) {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		return sdf.format(System.currentTimeMillis());
+	}
+	
+	public String getHostName() {
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			return ""; 
+		}
+	}
+	
+	public String getHostAddress() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			return ""; 
+		}
 	}
 	
 	

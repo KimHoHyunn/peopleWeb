@@ -105,6 +105,7 @@ public enum ErrorCode {
     , EMAIL_NOT_FOUND(404, "404002", "Email 계정을 찾을 수 없습니다.")
     , ITEMS_NOT_FOUND(404, "404003", "요청하신 상품을 찾을 수 없습니다.")
     , BROWSER_NOT_FOUND(404, "404004", "Not supported client-browser ")
+    , FILEDATA_NOT_FOUND(404, "404005", "Request File is Not Found")
 
     //409 CONFLICT 중복된 리소스
     //    이 응답은 요청이 현재 서버의 상태와 충돌될 때 보냅니다.

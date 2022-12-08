@@ -18,7 +18,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -288,87 +287,4 @@ public class OldFileUtil {
 //		}
 //	}
 
-	public static FileVO saveFile(MultipartFile originalFile) throws IllegalStateException, IOException, InterruptedException {
-		
-		FileVO fileVO = new FileVO();
-		
-    	String originalFileName = originalFile.getOriginalFilename();
-    	fileVO.setOriginalFileName(originalFileName);
-        log.debug("file org name = {}", originalFileName);
-        
-        String originalFileType = originalFile.getContentType();
-        fileVO.setFileType(originalFileType);
-        log.debug("file content type = {}", originalFile.getContentType());
-        
-        String fileExt = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-        fileVO.setFileExt(fileExt);
-        log.debug("file extension = {}", fileExt);
-        
-    	String saveFileName = createFileName();
-    	fileVO.setSaveFileName(saveFileName+"."+fileExt);
-    	log.info("--- saveFileName = "+ saveFileName);
-    	
-    	log.info("--- basePath     = "+ basePath);
-       	String saveFilePath = makePath(basePath, PATH.FILE.toString(), saveFileName+"."+fileExt);
-       	log.info("--- saveFilePath = "+ saveFilePath);
-       	
-       	File targetFile = new File(saveFilePath);
-       	fileVO.setFilePath(targetFile.getParent().replace("\\","/"));
-       	log.info("--- getParent = "+ fileVO.getFilePath());
-       	create(originalFile, targetFile);
-       	
-       	return fileVO;
-	}
-	
-	public static ResponseEntity<?> fileDownload(HttpServletRequest request, FileVO fileVO) throws Exception{
-		HttpHeaders headers = new HttpHeaders();
-
-//			contentType = Files.probeContentType(path);
-//			headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-//			headers.setContentDisposition(ContentDisposition.builder("attachment")
-//					                                        .filename(fileVO.getOriginalFileName(), StandardCharsets.UTF_8)
-//					                                        .build());
-		
-		String userAgent = request.getHeader("User-Agent");
-		boolean isBrowser = false;
-
-		String encordedFilename = fileVO.getOriginalFileName();
-		String attachment       = "";
-		if(userAgent.contains("Edge")) {
-			isBrowser = true;
-			encordedFilename = URLEncoder.encode(encordedFilename,"UTF-8").replace("\\+", "%20");
-			attachment = "attachment;filename=\""+encordedFilename;
-		} else if(userAgent.contains("MSIE") || userAgent.contains("Trident")  ) {
-			isBrowser = true;
-			encordedFilename = URLEncoder.encode(encordedFilename,"UTF-8").replace("\\+", "%20");
-			attachment = "attachment;filename=\""+encordedFilename;
-		} else if(userAgent.contains("Chrome")  ) {
-			isBrowser = true;
-			encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
-			attachment = "attachment;filename="+encordedFilename;		
-		} else if(userAgent.contains("Firefox")  ) {
-			isBrowser = true;
-			encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
-			attachment = "attachment;filename="+encordedFilename;	
-		} else if(userAgent.contains("Postman")  ) {
-			isBrowser = true;
-			encordedFilename = new String(encordedFilename.getBytes("UTF-8"),"ISO-8859-1");
-			attachment = "attachment;filename="+fileVO.getSaveFileName();
-//		} else {
-//			throw new CustomException(ErrorCode.BROWSER_NOT_FOUND);
-		}
-		
-		if(isBrowser) {
-			headers.add("Content-Disposition", attachment);
-			headers.add("Content-Type", "application/octet-stream");                
-			headers.add("Content-Transfer-Encoding", "binary;");
-			headers.add("Pragma", "no-cache;");
-			headers.add("Expires", "-1;");
-			Path path = Paths.get(fileVO.getFilePath() + "/" + fileVO.getSaveFileName());
-			Resource resource = new InputStreamResource(Files.newInputStream(path));
-			return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-		} else {
-			throw new CustomException(ErrorCode.BROWSER_NOT_FOUND);
-		}
-	}
 }
