@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.sample.async.dao.AsyncDao;
 import com.people.sample.jms.producer.ArtemisProducer;
 
@@ -60,7 +60,7 @@ public class AsyncTaskService {
 			List<Future<Map<String, Object>>> result = executorService.invokeAll(futures);
 			log.info("result = "+result.toString());
 		} catch (InterruptedException e) {
-			SystemUtil.getExceptionLog(e);
+			OldSystemUtil.getExceptionLog(e);
 		} finally {
 			shutdownThreadPool();
 		}
@@ -88,7 +88,7 @@ public class AsyncTaskService {
 		} catch (Exception e) {
 			executorService.shutdown();
 			Thread.currentThread().interrupt();
-			SystemUtil.getExceptionLog(e);
+			OldSystemUtil.getExceptionLog(e);
 		}
 	}
 	

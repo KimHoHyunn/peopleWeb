@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Component
 public final class CommonUtil {
 	
 	public boolean isEmpty(Object obj) {

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author mh042
  *
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Component
 public class PropertiesUtil {
 	@Autowired Environment env;

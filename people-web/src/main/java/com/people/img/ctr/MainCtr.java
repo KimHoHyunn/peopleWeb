@@ -3,7 +3,7 @@ package com.people.img.ctr;
 import java.util.List;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.OldCommonUtil;
 import com.people.common.vo.ConfigVO;
 import com.people.img.dao.DaoSelect;
 
@@ -49,7 +49,7 @@ public class MainCtr {
 		//한번에 처리건수 제한 (configVO.getTargetMaxCnt) -- rownum으로 조건 걸어서 제한. 페이징처리와 비슷
 		List<String> eDocIdxNoList = DaoSelect.selectTarget(configVO);
 		
-		if(CommonUtil.isNotEmpty(eDocIdxNoList)) {
+		if(OldCommonUtil.isNotEmpty(eDocIdxNoList)) {
 			ImgCreateCtr imgCreateCtr = new ImgCreateCtr();
 			imgCreateCtr.procJobMain(eDocIdxNoList, configVO.getThreadPoolSize());
 		}

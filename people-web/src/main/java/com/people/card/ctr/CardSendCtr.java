@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.people.card.ctr.sub.CardSendList;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +17,7 @@ public class CardSendCtr {
 			CardSendList cardSendList = new CardSendList(eDocInfo, props, threadPoolSize);
 			cardSendList.workJobList();
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		}
 	}
 }

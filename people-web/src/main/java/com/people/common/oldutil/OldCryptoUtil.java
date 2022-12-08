@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CryptoUtil {
+public class OldCryptoUtil {
 	
 	private static final String algorithm = "AES/CBC/PKCS5Padding";
 	private static final int AES_KEY_SIZE_128 = 128;
@@ -40,7 +40,7 @@ public class CryptoUtil {
 		byte[] key 		= null;
 		byte[] iv  		= null;
 		
-		key = SystemUtil.getHostName().getBytes("utf-8");
+		key = OldSystemUtil.getHostName().getBytes("utf-8");
 		key = copyOf(key, AES_KEY_SIZE_128 / 8);
 		
 		iv = initVec.getBytes("utf-8");
@@ -75,7 +75,7 @@ public class CryptoUtil {
 		byte[] key 		= null;
 		byte[] iv  		= null;
 		
-		key = SystemUtil.getHostName().getBytes("utf-8");
+		key = OldSystemUtil.getHostName().getBytes("utf-8");
 		key = copyOf(key, AES_KEY_SIZE_128 / 8);
 		
 		iv = initVec.getBytes("utf-8");

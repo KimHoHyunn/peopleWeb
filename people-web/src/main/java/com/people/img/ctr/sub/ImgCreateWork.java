@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.vo.DirFileVO;
 import com.people.img.dao.DaoSelect;
 import com.people.img.dao.DaoUpdate;
@@ -40,8 +40,8 @@ public class ImgCreateWork implements Callable<DirFileVO> {
 		
 		//이미지인덱스번호가 있는 경우 대표서식키(BPR전송)로 지정한다.
 		//select에서 order by로 첫번째가 대표서식키로 나오도록 Query 개발됨.
-		String repBprKey = CommonUtil.objectToString(list.get(0).get("IMG_IDX_NO"));
-		if(CommonUtil.isNotEmpty(list)) {
+		String repBprKey = OldCommonUtil.objectToString(list.get(0).get("IMG_IDX_NO"));
+		if(OldCommonUtil.isNotEmpty(list)) {
 			for(Map<String, Object> map : list) {
 				DirFileVO dirFileVO = imgCrt(map,repBprKey);
 			}
@@ -55,13 +55,13 @@ public class ImgCreateWork implements Callable<DirFileVO> {
 	private DirFileVO imgCrt(Map<String, Object> map, String repBprKey) {
 		DirFileVO dirFileVO = new DirFileVO();
 		
-		int imgSer = CommonUtil.safeObjToInt(map.get("IMG_SER"));
-		int eDocProcSeqV = CommonUtil.safeObjToInt(map.get("EDOC_PROC_SEQ_V"));
-		String docFormC = CommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
-		String smpDocFormGV = CommonUtil.safeObjToStr(map.get("SMP_DOC_FORM_G_V"));
-		String storPathNm = CommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));
-		String procFileNm = CommonUtil.safeObjToStr(map.get("PROC_FILE_NM"));
-		String imgIdxNo = CommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));
+		int imgSer = OldCommonUtil.safeObjToInt(map.get("IMG_SER"));
+		int eDocProcSeqV = OldCommonUtil.safeObjToInt(map.get("EDOC_PROC_SEQ_V"));
+		String docFormC = OldCommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
+		String smpDocFormGV = OldCommonUtil.safeObjToStr(map.get("SMP_DOC_FORM_G_V"));
+		String storPathNm = OldCommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));
+		String procFileNm = OldCommonUtil.safeObjToStr(map.get("PROC_FILE_NM"));
+		String imgIdxNo = OldCommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));
 		int delimiter = '|';
 		
 		String fileNm = "";
@@ -69,9 +69,9 @@ public class ImgCreateWork implements Callable<DirFileVO> {
 		String multiTIFFName = "";
 		
 		try {
-			String infDocFormC = CommonUtil.getInfCodeType(docFormC);
+			String infDocFormC = OldCommonUtil.getInfCodeType(docFormC);
 			
-			if(CommonUtil.isEmpty(imgIdxNo)) {
+			if(OldCommonUtil.isEmpty(imgIdxNo)) {
 				//연동정보가 없는 경우
 				fileNm = String.format("%s,%s.tif",infDocFormC, repBprKey); 
 			} else {
@@ -84,13 +84,13 @@ public class ImgCreateWork implements Callable<DirFileVO> {
 			dirFileVO.setEDocIdxNo(eDocIdxNo);
 			dirFileVO.setImgSer(imgSer);
 			
-			File pdfFile = FileUtil.joinPaths(storPathNm, procFileNm);
+			File pdfFile = OldFileUtil.joinPaths(storPathNm, procFileNm);
 			
 			String pdfFilePath = pdfFile.getPath();
 			String pdfFileName = pdfFile.getName();
 			long pdfFileLenath = pdfFile.length();
 			
-			if(FileUtil.exists(pdfFile) == false ) {
+			if(OldFileUtil.exists(pdfFile) == false ) {
 				dirFileVO.setConvert_ret(false);
 				dirFileVO.setDb_Ret(false);
 				
@@ -120,9 +120,9 @@ public class ImgCreateWork implements Callable<DirFileVO> {
 			
 			
 			//이미지생성경로
-			String imgPath = FileUtil.joinPaths(pdfFile.getPath(), FileUtil.PATH.IMAGE).getPath();
+			String imgPath = OldFileUtil.joinPaths(pdfFile.getPath(), OldFileUtil.PATH.IMAGE).getPath();
 			
-			boolean isDir = FileUtil.mkdirs(imgPath);
+			boolean isDir = OldFileUtil.mkdirs(imgPath);
 			
 			
 			//이미지 변환 시작
@@ -133,10 +133,10 @@ public class ImgCreateWork implements Callable<DirFileVO> {
 			int retP2I = ImgUtil.convertPDF2Image(pdfFile, imgPath, pdfPageCnt);
 			
 			if(retP2I == pdfPageCnt) {
-				singleTIFFList = FileUtil.getFileListByDelimiter(new File(imgPath), delimiter);
+				singleTIFFList = OldFileUtil.getFileListByDelimiter(new File(imgPath), delimiter);
 				//String[] tifArray = singleTIFFList.split("\\"+String.valueOf((char)delimiter));
 			
-				multiTIFFName = FileUtil.joinPaths(imgPath, fileNm).getPath();
+				multiTIFFName = OldFileUtil.joinPaths(imgPath, fileNm).getPath();
 				
 				int ret_multi = ImgUtil.mergeTIFF(singleTIFFList, delimiter, multiTIFFName);
 				
@@ -164,7 +164,7 @@ public class ImgCreateWork implements Callable<DirFileVO> {
 			
 			
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 			EdsDao.registerErrHis(eDocIdxNo, imgSer, eDocProcSeqV, "0901", "이미지변환 에러");
 		}
 		return dirFileVO;

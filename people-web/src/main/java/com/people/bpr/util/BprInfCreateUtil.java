@@ -5,10 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.InfCreateUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
+import com.people.common.oldutil.OldInfCreateUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Getter
 @Slf4j
-public class BprInfCreateUtil implements InfCreateUtil{
+public class BprInfCreateUtil implements OldInfCreateUtil{
 	//common
 	
 	private String c_agtSysC		;//agent시스템코드
@@ -69,7 +69,7 @@ public class BprInfCreateUtil implements InfCreateUtil{
 	@Override
 	public boolean createInfFile(File infFile) {
 		//디렉토리생성
-		FileUtil.mkdirs(infFile.getParent());
+		OldFileUtil.mkdirs(infFile.getParent());
 		
 		StringBuffer sb = new StringBuffer();
 		
@@ -138,7 +138,7 @@ public class BprInfCreateUtil implements InfCreateUtil{
 		sb.append("eDocG="			).append(md_eDocG			).append(SP_CHAR);
 		sb.append("scanYn="			).append(md_scanYn			).append(SP_CHAR);
 		sb.append("ingamYn="		).append(md_ingamYn			).append(SP_CHAR);
-		sb.append("memo="			).append(CommonUtil.safeReplace(md_memo, "\r\n", "\\n")).append(SP_CHAR);
+		sb.append("memo="			).append(OldCommonUtil.safeReplace(md_memo, "\r\n", "\\n")).append(SP_CHAR);
 
 		//전표
 		if("0509".equals(c_agtUpmuG)) {
@@ -152,9 +152,9 @@ public class BprInfCreateUtil implements InfCreateUtil{
 			fos = new FileOutputStream(infFile);
 			fos.write(sb.toString().getBytes(ENCODING_CHARSET));
 		} catch (IOException e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
-			if(null != fos) { try {fos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(null != fos) { try {fos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 		
 		//3 파일이 생성되었는지 확인하여 리턴

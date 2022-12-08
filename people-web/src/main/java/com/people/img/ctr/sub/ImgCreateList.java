@@ -8,8 +8,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.vo.DirFileVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class ImgCreateList {
 		
 		this.eDocIdxNoList = eDocIdxNoList;
 		
-		this.comprate = CommonUtil.safeObjToInt(props.getProperty("comprate"), 80);
+		this.comprate = OldCommonUtil.safeObjToInt(props.getProperty("comprate"), 80);
 		this.threadPoolSize = threadPoolSize;
 		
 		String className = this.getClass().getSimpleName();
@@ -71,7 +71,7 @@ public class ImgCreateList {
 		} catch (Exception e) {
 			executorService.shutdown();
 			Thread.currentThread().interrupt();
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		}
 	}
 

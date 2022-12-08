@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.OldCommonUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,8 +26,8 @@ public class RestApiController {
     public ResponseEntity<?>  restApiGet(String aa, String bb) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(CommonUtil.isNotEmpty(aa)) params.put("aa",aa);
-		if(CommonUtil.isNotEmpty(bb)) params.put("bb",bb);
+		if(OldCommonUtil.isNotEmpty(aa)) params.put("aa",aa);
+		if(OldCommonUtil.isNotEmpty(bb)) params.put("bb",bb);
 		
 		List<Map<String, Object>> ret = restApiService.getData(params);
 
@@ -62,8 +62,8 @@ public class RestApiController {
 		log.info(new Object() {}.getClass().getEnclosingMethod().getName());
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(CommonUtil.isNotEmpty(aa)) params.put("aa",aa);
-		if(CommonUtil.isNotEmpty(bb)) params.put("bb",bb);
+		if(OldCommonUtil.isNotEmpty(aa)) params.put("aa",aa);
+		if(OldCommonUtil.isNotEmpty(bb)) params.put("bb",bb);
 		List<Map<String, Object>> ret = restApiService.getData(params);
 		
 		return ResponseEntity.ok().body(ret);
@@ -73,8 +73,8 @@ public class RestApiController {
     public ResponseEntity<?>  restApiVoParam(RestApiVO restApiVO) {
 		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(CommonUtil.isNotEmpty(restApiVO.getAa())) params.put("aa",restApiVO.getAa());
-		if(CommonUtil.isNotEmpty(restApiVO.getBb())) params.put("bb",restApiVO.getBb());
+		if(OldCommonUtil.isNotEmpty(restApiVO.getAa())) params.put("aa",restApiVO.getAa());
+		if(OldCommonUtil.isNotEmpty(restApiVO.getBb())) params.put("bb",restApiVO.getBb());
 		List<Map<String, Object>> ret = restApiService.getData(params);
 		
 		return ResponseEntity.ok().body(ret);

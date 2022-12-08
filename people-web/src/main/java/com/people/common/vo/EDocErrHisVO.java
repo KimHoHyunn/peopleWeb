@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.OldCommonUtil;
 
 import lombok.Getter;
 
@@ -31,12 +31,12 @@ public class EDocErrHisVO {
 		this.eDocProcStepCval = EdsDao.getEDocProcStep().getCval();
 		this.eDocErrCtnt = eDocErrCtnt;
 		
-		return !(    CommonUtil.isEmpty(this.eDocIdxNo)
-				  || CommonUtil.isEmpty(this.imgSer)
-				  || CommonUtil.isEmpty(this.eDocProcSeqV)
-				  || CommonUtil.isEmpty(this.eDocProcErrC)
-				  || CommonUtil.isEmpty(this.eDocProcStepCval)
-				  || CommonUtil.isEmpty(this.eDocErrCtnt)
+		return !(    OldCommonUtil.isEmpty(this.eDocIdxNo)
+				  || OldCommonUtil.isEmpty(this.imgSer)
+				  || OldCommonUtil.isEmpty(this.eDocProcSeqV)
+				  || OldCommonUtil.isEmpty(this.eDocProcErrC)
+				  || OldCommonUtil.isEmpty(this.eDocProcStepCval)
+				  || OldCommonUtil.isEmpty(this.eDocErrCtnt)
 				);
 		
 	}

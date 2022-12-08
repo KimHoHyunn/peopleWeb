@@ -3,8 +3,8 @@ package com.people.card.itf;
 import java.util.Map;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.step.EDocProcStep;
 import com.people.common.vo.ConfigVO;
 import com.people.card.ctr.CardMainCtr;
@@ -31,7 +31,7 @@ public class DaemonRunner {
 			
 		} catch (Exception e) {
 			// TODO: handle exception
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		}
 		
 		/**
@@ -53,16 +53,16 @@ public class DaemonRunner {
 				
 				
 			}catch (Exception e) {
-				log.error(SystemUtil.getExceptionLog(e));
+				log.error(OldSystemUtil.getExceptionLog(e));
 			}finally {
 				try {
 					long millis = 1000;
-					if(!CommonUtil.isEmpty(configVO)) {
+					if(!OldCommonUtil.isEmpty(configVO)) {
 						millis = configVO.getSleepval();
 					}
 					Thread.sleep(millis);
 				} catch (Exception e2) {
-					log.error(SystemUtil.getExceptionLog(e2));
+					log.error(OldSystemUtil.getExceptionLog(e2));
 				}
 			}
 		}//while

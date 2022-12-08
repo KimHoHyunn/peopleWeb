@@ -2,7 +2,7 @@ package com.people.common.oldutil;
 
 import java.io.File;
 
-public interface InfCreateUtil {
+public interface OldInfCreateUtil {
 	/**
 	 * 항목별 구분자(개행문자)
 	 */

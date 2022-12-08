@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class FileUtil {
+public class OldFileUtil {
 	
 	//private FileUtil() {}
 	
@@ -62,7 +62,7 @@ public class FileUtil {
 		
 		StringBuffer sb = new StringBuffer();
 		
-		List<File> fileInfoArray = FileFinder.search(path, FileFinder.FILE_FILTER);
+		List<File> fileInfoArray = OldFileFinder.search(path, OldFileFinder.FILE_FILTER);
 		
 		Collections.sort(fileInfoArray);
 		
@@ -110,12 +110,12 @@ public class FileUtil {
 					result = true;
 					
 				} catch (IOException e) {
-					log.error(SystemUtil.getExceptionLog(e));
+					log.error(OldSystemUtil.getExceptionLog(e));
 				} finally {
-					if( null != out ) try {out.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-					if( null != in ) try {in.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-					if( null != fos ) try {fos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-					if( null != fis ) try {fis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
+					if( null != out ) try {out.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
+					if( null != in ) try {in.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
+					if( null != fos ) try {fos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
+					if( null != fis ) try {fis.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
 				}
 			} else {
 				log.error("Create Directory Error~");
@@ -212,10 +212,10 @@ public class FileUtil {
 			result = true;
 			
 		} catch(IOException e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
-			if( null != baos ) try {baos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-			if( null != fis ) try {fis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
+			if( null != baos ) try {baos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
+			if( null != fis ) try {fis.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
 		}
 		
 		return result;
@@ -242,10 +242,10 @@ public class FileUtil {
 			binary = new String(baos.toByteArray());
 			
 		} catch(IOException e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
-			if( null != baos ) try {baos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-			if( null != fis ) try {fis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
+			if( null != baos ) try {baos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
+			if( null != fis ) try {fis.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}
 		}
 		
 		return binary;
@@ -253,7 +253,7 @@ public class FileUtil {
 	}
 	
 	public static boolean mkdirs(String path) {
-		return CommonUtil.isNotEmpty(path) && mkdirs(new File(path));
+		return OldCommonUtil.isNotEmpty(path) && mkdirs(new File(path));
 	}
 	
 	private static boolean mkdirs(File path) {

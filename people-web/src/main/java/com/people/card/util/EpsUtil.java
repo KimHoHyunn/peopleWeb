@@ -11,8 +11,8 @@ import org.xml.sax.InputSource;
 
 import com.people.card.vo.EpsBodyVO;
 import com.people.card.vo.EpsHeaderVO;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +32,7 @@ public class EpsUtil {
 	public static String getElementValue(Element el, String key) {
 		Element elChild = el.getChild(key);
 		
-		if(CommonUtil.isEmpty(elChild)) {
+		if(OldCommonUtil.isEmpty(elChild)) {
 			return "";
 		} else {
 			return elChild.getValue();
@@ -101,11 +101,11 @@ public class EpsUtil {
 			ebVO.setData_flat_bln(getElementValue(el_data_flat, "bln"));
 			
 			String bprDaXstF = ebVO.getData_flat_bpr_da_xst_f();
-			if(CommonUtil.isEmpty(bprDaXstF) || "Y".equals(bprDaXstF) == false) {
+			if(OldCommonUtil.isEmpty(bprDaXstF) || "Y".equals(bprDaXstF) == false) {
 				result = ParseResult.SND_IPSB;
-			} else if(   CommonUtil.isNotEmpty(ebVO.getData_flat_bpr_map_cd())
-					  && CommonUtil.isNotEmpty(ebVO.getData_flat_bpr_img_key_vl())
-					  && CommonUtil.isNotEmpty(ebVO.getData_flat_bpr_pcd())
+			} else if(   OldCommonUtil.isNotEmpty(ebVO.getData_flat_bpr_map_cd())
+					  && OldCommonUtil.isNotEmpty(ebVO.getData_flat_bpr_img_key_vl())
+					  && OldCommonUtil.isNotEmpty(ebVO.getData_flat_bpr_pcd())
 					 ) {
 				result = ParseResult.SUCC;
 				
@@ -113,7 +113,7 @@ public class EpsUtil {
 			
 			
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		}
 		
 		return result;

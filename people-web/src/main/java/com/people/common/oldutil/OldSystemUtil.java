@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @Configuration
-public class SystemUtil {
+public class OldSystemUtil {
 	
 	public static final String getHostName() {
 		try {

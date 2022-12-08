@@ -12,8 +12,8 @@ import java.util.Properties;
 import java.util.Vector;
 
 import com.people.card.packet.CardPacket;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +27,7 @@ public class CardSendUtil {
 		Properties props = new Properties();//SystemUtil.getConfigProperties();
 		
 		serverIP = props.getProperty("SERVER_CARD_IP");
-		serverPort = CommonUtil.safeObjToInt(props.get("SERVER_CARD_PORT"));
+		serverPort = OldCommonUtil.safeObjToInt(props.get("SERVER_CARD_PORT"));
 		ecmIP = props.getProperty("SERVER_ECM_IP");
 	}
 	
@@ -73,14 +73,14 @@ public class CardSendUtil {
 			}
 			
 		} catch (Exception e) {
-			if(CommonUtil.isEmpty(errC)) {
+			if(OldCommonUtil.isEmpty(errC)) {
 				errC = ERR_C.SEND_FAIL;
 			}
-			log.error(CommonUtil.getEccNo(e));
+			log.error(OldCommonUtil.getEccNo(e));
 		} finally {
-			if(CommonUtil.isNotEmpty(in)) { try {in.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(out)) { try {out.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(socket)) { try {socket.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(in)) { try {in.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(out)) { try {out.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(socket)) { try {socket.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 		
 		return errC;
@@ -104,7 +104,7 @@ public class CardSendUtil {
 	private String sendTileToCard(File file, DataOutputStream out, DataInputStream in, String fileKind) throws IOException{
 		Vector<byte[]> sendBuffers = readFiletoVector(file);
 		
-		if(CommonUtil.isEmpty(sendBuffers) || 0 == sendBuffers.size()) {
+		if(OldCommonUtil.isEmpty(sendBuffers) || 0 == sendBuffers.size()) {
 			return ERR_C.SEND_FAIL;
 		}
 		
@@ -167,7 +167,7 @@ public class CardSendUtil {
 			int recvBytes = in.read(recvBuffer);
 			//응답전문을 처리할 수신 패킷 생성
 			CardPacket recvPacket = CardPacket.create();
-			if(CommonUtil.isEmpty(recvBuffer) || recvBuffer.length != recvPacket.length()) {
+			if(OldCommonUtil.isEmpty(recvBuffer) || recvBuffer.length != recvPacket.length()) {
 				return ("img".equals(fileKind)) ? ERR_C.IMG_RESPONSE_WRONG : ERR_C.INF_RESPONSE_WRONG;
 			}
 			
@@ -220,9 +220,9 @@ public class CardSendUtil {
 			}
 			
 		} catch (IOException e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
-			if(CommonUtil.isNotEmpty(bis)) { try {bis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(bis)) { try {bis.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 		
 		return byteList;

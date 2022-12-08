@@ -7,8 +7,8 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.extern.slf4j.Slf4j;
 /**
@@ -37,7 +37,7 @@ public class Html2Pdf {
 		
 		//환경설정
 		String rootPath = req.getSession().getServletContext().getRealPath("/");
-		String localhotnm = SystemUtil.getHostName();
+		String localhotnm = OldSystemUtil.getHostName();
 		
 		Properties props = new Properties();//SystemUtil.getConfigProperties();
 		String basePath = props.getProperty("PDF_BASEPATH"); //tmp pdf 파일 저정 경로
@@ -51,7 +51,7 @@ public class Html2Pdf {
 		String licensePath = rootPath + "/WEB-INF/config"+props.getProperty("PDFUTIL_LICENSE");
 
 		if(!checkLicense(licensePath)) {
-			log.error(SystemUtil.getExceptionLog(null));
+			log.error(OldSystemUtil.getExceptionLog(null));
 		}
 	}
 	
@@ -64,7 +64,7 @@ public class Html2Pdf {
 		
 		String FS = File.separator;
 		FileInputStream fis = null;
-		if(CommonUtil.isEmpty(licensePath)) {
+		if(OldCommonUtil.isEmpty(licensePath)) {
 			throw new Exception("license path wrong~");
 		} 
 		

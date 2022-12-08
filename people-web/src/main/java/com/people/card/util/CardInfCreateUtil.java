@@ -5,8 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import com.people.common.oldutil.InfCreateUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldInfCreateUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @Getter
 @Slf4j
-public class CardInfCreateUtil implements InfCreateUtil {
+public class CardInfCreateUtil implements OldInfCreateUtil {
 	//COMMON PART
 	private String c_BPR_PS_SHP_CO_CD = "";
 	private String c_BPR_BNE_ZCD = "";
@@ -104,9 +104,9 @@ public class CardInfCreateUtil implements InfCreateUtil {
 			fos = new FileOutputStream(infFile);
 			fos.write(sb.toString().getBytes(ENCODING_CHARSET));
 		} catch (IOException e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
-			if(null != fos) { try {fos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(null != fos) { try {fos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 		
 		//3 파일이 생성되었는지 확인하여 리턴

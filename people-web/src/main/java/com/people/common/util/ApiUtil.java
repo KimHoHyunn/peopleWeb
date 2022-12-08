@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 //유틸 클래스이니 상속이나 인스턴스 생성을 막기위해 private scope의 기본생성자를 만들어둡니다.
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Component
 public class ApiUtil {
 	
 	@Autowired CommonUtil commonUtil;

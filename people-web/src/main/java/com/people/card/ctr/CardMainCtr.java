@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.OldCommonUtil;
 import com.people.common.vo.ConfigVO;
 import com.people.card.dao.DaoSelect;
 
@@ -49,7 +49,7 @@ public class CardMainCtr {
 		//한번에 처리건수 제한 (configVO.getTargetMaxCnt) -- rownum으로 조건 걸어서 제한. 페이징처리와 비슷
 		List<Map<String, Object>> eDocInfoList = DaoSelect.selectTarget(configVO);
 		
-		if(CommonUtil.isNotEmpty(eDocInfoList)) {
+		if(OldCommonUtil.isNotEmpty(eDocInfoList)) {
 			for(Map<String, Object> eDocInfo : eDocInfoList) {
 				CardSendCtr cardSendCtr = new CardSendCtr();
 				cardSendCtr.procJobMain(eDocInfo, configVO.getThreadPoolSize());

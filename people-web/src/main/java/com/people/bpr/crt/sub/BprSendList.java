@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 import com.people.bpr.dao.DaoSelect;
 import com.people.bpr.dao.DaoUpdate;
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.vo.SndRstVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +40,9 @@ public class BprSendList {
 		
 		String subPath1 = eDocIdxNo.substring(0,8);
 		String subPath2 = eDocIdxNo.substring(18,22);
-		this.inIdxPath 		= FileUtil.joinPaths(props.getProperty("idx_path"), subPath1, subPath2, eDocIdxNo).getPath();
-		this.bprImgUrl		= CommonUtil.safeObjToStr(props.getProperty("BPR_IMG_URL"));
-		this.bprImgSubUrl	= CommonUtil.safeObjToStr(props.getProperty("BPR_IMG_SUB_URL"));
+		this.inIdxPath 		= OldFileUtil.joinPaths(props.getProperty("idx_path"), subPath1, subPath2, eDocIdxNo).getPath();
+		this.bprImgUrl		= OldCommonUtil.safeObjToStr(props.getProperty("BPR_IMG_URL"));
+		this.bprImgSubUrl	= OldCommonUtil.safeObjToStr(props.getProperty("BPR_IMG_SUB_URL"));
 		
 		log.info(EdsDao.getEDocProcStep().toString());
 	}
@@ -58,7 +58,7 @@ public class BprSendList {
 			//전자문서의 서식리스트
 			List<Map<String, Object>> targetList = DaoSelect.selectFileTarget(eDocIdxNo);
 			
-			if(CommonUtil.isNotEmpty(targetList)) {
+			if(OldCommonUtil.isNotEmpty(targetList)) {
 				
 				//대표서식(서식이있는) 데이터에 TECC C 가 없는 서식 모두 첨부하기 위해~
 				List<String> mergeDocList = new ArrayList<String>();
@@ -70,7 +70,7 @@ public class BprSendList {
 				for(int i=targetList.size() - 1 ; i >= 0; i--) {
 
 					Map<String, Object> map = targetList.get(i);
-					String docFormC = CommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
+					String docFormC = OldCommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
 					/**
 					 * 전자문서 구분
 					 * 0 종이
@@ -83,14 +83,14 @@ public class BprSendList {
 					 * 7 디지털 창구 카드사(카드-카드사 페이퍼리스 PPR pdf 전송)
 					 * 9 디지털 창구 여신
 					 */
-					String eDocG	= CommonUtil.safeObjToStr(map.get("E_DOC_G"));
-					String tecc		= CommonUtil.safeObjToStr(map.get("TECC_C"));
+					String eDocG	= OldCommonUtil.safeObjToStr(map.get("E_DOC_G"));
+					String tecc		= OldCommonUtil.safeObjToStr(map.get("TECC_C"));
 					
 					//대표서식인가
 					boolean isrepDoc = false;
 					
 					//ECC가 없으면 첨부대상
-					if(CommonUtil.isEmpty(tecc)) {
+					if(OldCommonUtil.isEmpty(tecc)) {
 						mergeDocList.add(docFormC);
 					} else {
 						//isFirst가 true 이면 첫번째 데이터로 대표식이다.
@@ -154,7 +154,7 @@ public class BprSendList {
 			
 			
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
 			shutdownThreadPool();
 		}
@@ -169,7 +169,7 @@ public class BprSendList {
 		} catch (Exception e) {
 			executorService.shutdown();
 			Thread.currentThread().interrupt();
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		}
 	}
 }

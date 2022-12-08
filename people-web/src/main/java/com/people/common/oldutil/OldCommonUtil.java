@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class CommonUtil {
+public final class OldCommonUtil {
 	
 	public static boolean isEmpty(Object obj) {
 		return (null == obj)

@@ -2,7 +2,7 @@ package com.people.common.step;
 
 import java.util.Map;
 
-import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.OldCommonUtil;
 import com.people.common.vo.ConfigVO;
 
 import lombok.Getter;
@@ -19,11 +19,11 @@ public enum EDocProcStep {
 	PDF ("02","pdf File Create") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("PDF2_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("PDF2_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("PDF2_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("PDF2_THREAD_POOL_SIZE"), 10));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("PDF2_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("PDF2_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("PDF2_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("PDF2_THREAD_POOL_SIZE"), 10));
 			} else {
 				setConfigInfoByDefault(configVO, PDF);
 			}
@@ -33,11 +33,11 @@ public enum EDocProcStep {
 	TSA ("03","tsa certification") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("TSA_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("TSA_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("TSA_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("TSA_THREAD_POOL_SIZE"), 10));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("TSA_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("TSA_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("TSA_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("TSA_THREAD_POOL_SIZE"), 10));
 			} else {
 				setConfigInfoByDefault(configVO, TSA);
 			}
@@ -48,11 +48,11 @@ public enum EDocProcStep {
 	ECM ("04","ECM(XTORM) Send") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("XTORM_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("XTORM_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("XTORM_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("XTORM_THREAD_POOL_SIZE"), 10));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("XTORM_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("XTORM_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("XTORM_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("XTORM_THREAD_POOL_SIZE"), 10));
 			} else {
 				setConfigInfoByDefault(configVO, TSA);
 			}
@@ -63,12 +63,12 @@ public enum EDocProcStep {
 	IMG ("05","Image Convert") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("IMG_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("IMG_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("IMG_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("IMG_THREAD_POOL_SIZE"), 10));
-				configVO.setDb2dbGapval(CommonUtil.safeObjToInt(map.get("DB2DB_GAPVAL"), 60));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("IMG_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("IMG_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("IMG_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("IMG_THREAD_POOL_SIZE"), 10));
+				configVO.setDb2dbGapval(OldCommonUtil.safeObjToInt(map.get("DB2DB_GAPVAL"), 60));
 			} else {
 				setConfigInfoByDefault(configVO, IMG);
 			}
@@ -79,13 +79,13 @@ public enum EDocProcStep {
 	PAST_IMG ("05","Past Image Convert") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("BEF_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("BEF_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("BEF_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("BEF_THREAD_POOL_SIZE"), 10));
-				configVO.setFromDay(CommonUtil.safeObjToInt(map.get("BEF_DS_FROMDT"), 5));
-				configVO.setAllDay(CommonUtil.safeObjToStr(map.get("BEF_QUERY_ALL_DAY"), "N"));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("BEF_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("BEF_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("BEF_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("BEF_THREAD_POOL_SIZE"), 10));
+				configVO.setFromDay(OldCommonUtil.safeObjToInt(map.get("BEF_DS_FROMDT"), 5));
+				configVO.setAllDay(OldCommonUtil.safeObjToStr(map.get("BEF_QUERY_ALL_DAY"), "N"));
 			} else {
 				setConfigInfoByDefault(configVO, PAST_IMG);
 			}
@@ -97,14 +97,14 @@ public enum EDocProcStep {
 	BPR ("06","BPR Send") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("BPR_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("BPR_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("BPR_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("BPR_THREAD_POOL_SIZE"), 10));
-				configVO.setSendSleepval(CommonUtil.safeObjToInt(map.get("BPR_SEND_SLEEPVAL"), 10));
-				configVO.setBprDaemonG(CommonUtil.safeObjToStr(map.get("BPR_DAEMON_G"), "N"));
-				configVO.setBprSendG(CommonUtil.safeObjToStr(map.get("BPR2_SEND_G"), ""));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("BPR_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("BPR_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("BPR_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("BPR_THREAD_POOL_SIZE"), 10));
+				configVO.setSendSleepval(OldCommonUtil.safeObjToInt(map.get("BPR_SEND_SLEEPVAL"), 10));
+				configVO.setBprDaemonG(OldCommonUtil.safeObjToStr(map.get("BPR_DAEMON_G"), "N"));
+				configVO.setBprSendG(OldCommonUtil.safeObjToStr(map.get("BPR2_SEND_G"), ""));
 			} else {
 				setConfigInfoByDefault(configVO, BPR);
 			}
@@ -116,14 +116,14 @@ public enum EDocProcStep {
 	BPR2 ("06","BPR Send") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("BPR2_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("BPR2_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("BPR2_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("BPR2_THREAD_POOL_SIZE"), 10));
-				configVO.setSendSleepval(CommonUtil.safeObjToInt(map.get("BPR2_SEND_SLEEPVAL"), 10));
-				configVO.setBprDaemonG(CommonUtil.safeObjToStr(map.get("BPR2_DAEMON_G"), "N"));
-				configVO.setBprSendG(CommonUtil.safeObjToStr(map.get("BPR2_SEND_G"), ""));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("BPR2_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("BPR2_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("BPR2_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("BPR2_THREAD_POOL_SIZE"), 10));
+				configVO.setSendSleepval(OldCommonUtil.safeObjToInt(map.get("BPR2_SEND_SLEEPVAL"), 10));
+				configVO.setBprDaemonG(OldCommonUtil.safeObjToStr(map.get("BPR2_DAEMON_G"), "N"));
+				configVO.setBprSendG(OldCommonUtil.safeObjToStr(map.get("BPR2_SEND_G"), ""));
 			} else {
 				setConfigInfoByDefault(configVO, BPR2);
 			}
@@ -134,15 +134,15 @@ public enum EDocProcStep {
 	PAST_BPR ("06","Past BPR Send") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("BEF_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("BEF_DAEMON2_SLEEPVAL"), 1000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("BEF_BPR_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("BEF_THREAD_POOL_SIZE"), 10));
-				configVO.setSendSleepval(CommonUtil.safeObjToInt(map.get("BEF_SEND_SLEEPVAL"), 10));
-				configVO.setFromDay(CommonUtil.safeObjToInt(map.get("BEF_DS_FROMDT"), 5));
-				configVO.setAllDay(CommonUtil.safeObjToStr(map.get("BEF_QUERY_ALL_DAY"), "N"));
-				configVO.setBprSendG(CommonUtil.safeObjToStr(map.get("BPR2_SEND_G"), ""));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("BEF_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("BEF_DAEMON2_SLEEPVAL"), 1000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("BEF_BPR_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("BEF_THREAD_POOL_SIZE"), 10));
+				configVO.setSendSleepval(OldCommonUtil.safeObjToInt(map.get("BEF_SEND_SLEEPVAL"), 10));
+				configVO.setFromDay(OldCommonUtil.safeObjToInt(map.get("BEF_DS_FROMDT"), 5));
+				configVO.setAllDay(OldCommonUtil.safeObjToStr(map.get("BEF_QUERY_ALL_DAY"), "N"));
+				configVO.setBprSendG(OldCommonUtil.safeObjToStr(map.get("BPR2_SEND_G"), ""));
 			} else {
 				setConfigInfoByDefault(configVO, PAST_BPR);
 			}
@@ -152,13 +152,13 @@ public enum EDocProcStep {
 	CARD ("07","Card Send") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setTargetMaxCount(CommonUtil.safeObjToInt(map.get("CARD_MAX_CNT"), 10));
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("CARD_SLEEPVAL"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("CARD_WORK_SKIP"), "N"));
-				configVO.setThreadPoolSize(CommonUtil.safeObjToInt(map.get("CARD_THREAD_POOL_SIZE"), 10));
-				configVO.setSendSleepval(CommonUtil.safeObjToInt(map.get("CARD_SEND_SLEEPVAL"), 10));
-				configVO.setFromDay(CommonUtil.safeObjToInt(map.get("CARD_FROM_DATE"), 0));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setTargetMaxCount(OldCommonUtil.safeObjToInt(map.get("CARD_MAX_CNT"), 10));
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("CARD_SLEEPVAL"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("CARD_WORK_SKIP"), "N"));
+				configVO.setThreadPoolSize(OldCommonUtil.safeObjToInt(map.get("CARD_THREAD_POOL_SIZE"), 10));
+				configVO.setSendSleepval(OldCommonUtil.safeObjToInt(map.get("CARD_SEND_SLEEPVAL"), 10));
+				configVO.setFromDay(OldCommonUtil.safeObjToInt(map.get("CARD_FROM_DATE"), 0));
 			} else {
 				setConfigInfoByDefault(configVO, CARD);
 			}
@@ -168,10 +168,10 @@ public enum EDocProcStep {
 	PAST_CARD ("07","Card Send") {
 		@Override
 		public void setConfigInfo(Map<String, Object> map, ConfigVO configVO) {
-			if(CommonUtil.isEmpty(map)) {
-				configVO.setSleepval(CommonUtil.safeObjToInt(map.get("BEF_CARDDAEMON_SLEEP"), 5000));
-				configVO.setWorkSkip(CommonUtil.safeObjToStr(map.get("BEF_CARD_WORK_SKIP"), "N"));
-				configVO.setAllDay(CommonUtil.safeObjToStr(map.get("BEF_QUERY_ALL_DAY"), "N"));
+			if(OldCommonUtil.isEmpty(map)) {
+				configVO.setSleepval(OldCommonUtil.safeObjToInt(map.get("BEF_CARDDAEMON_SLEEP"), 5000));
+				configVO.setWorkSkip(OldCommonUtil.safeObjToStr(map.get("BEF_CARD_WORK_SKIP"), "N"));
+				configVO.setAllDay(OldCommonUtil.safeObjToStr(map.get("BEF_QUERY_ALL_DAY"), "N"));
 			} else {
 				setConfigInfoByDefault(configVO, PAST_CARD);
 			}

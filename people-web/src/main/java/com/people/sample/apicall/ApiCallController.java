@@ -1,5 +1,6 @@
 package com.people.sample.apicall;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.people.common.consts.ErrorCode;
 import com.people.common.exception.CustomException;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.util.ApiUtil;
 import com.people.common.vo.ApiResponseVO;
 import com.people.common.vo.ApiVO;
@@ -18,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 public class ApiCallController {
+	
+	@Autowired ApiUtil apiUtil;
 
 	@GetMapping("/apicall")
     public ResponseEntity<ResponseVO> apicall(@RequestParam String aa) throws Exception {
@@ -32,7 +35,7 @@ public class ApiCallController {
 			ApiVO apiVO = new ApiVO();
 			apiVO.setRequestUrl("http://localhost:8080/rest/postparam");
 			apiVO.setAa(aa);
-			ApiResponseVO apiResponseVO = ApiUtil.post(apiVO);
+			ApiResponseVO apiResponseVO = apiUtil.post(apiVO);
 			
 			if(apiResponseVO.getHttpStatus() == ErrorCode.OK.getHttpStatus()) {
 				responseVO.setResultData("result", apiResponseVO.getResponseBody());
@@ -41,7 +44,7 @@ public class ApiCallController {
 			}
 			
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
         

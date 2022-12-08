@@ -14,9 +14,9 @@ import org.json.simple.parser.JSONParser;
 
 import com.people.card.packet.CardPdfRecvPacket;
 import com.people.card.packet.CardPdfSendPacket;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class CardSendPdfUtil {
 	public CardSendPdfUtil() throws IOException {
 		Properties props = new Properties();//SystemUtil.getConfigProperties();
 		serverIp = props.getProperty("PPR_CARD_SERVER_IP");
-		serverPort = CommonUtil.safeObjToInt(props.getProperty("PPR_CARD_SERVER_PORT"));
+		serverPort = OldCommonUtil.safeObjToInt(props.getProperty("PPR_CARD_SERVER_PORT"));
 	}
 	
 	@Getter
@@ -69,27 +69,27 @@ public class CardSendPdfUtil {
 	public SendResult sendCard(Map<String, Object> map) {
 		SendResult sendResult = SendResult.SUCCESS;
 		
-		String eDocIdxNo = CommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO"));	//전자문서번호
-		int    imgSer    = CommonUtil.safeObjToInt(map.get("IMG_SER"));		//이미지일련번호
-		String storPathNm = CommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));//저장경로명
-		String procFileNm = CommonUtil.safeObjToStr(map.get("PROC_FILE_NM"));//처리파일명
-		String trx_br_c = CommonUtil.safeObjToStr(map.get("TRXBRNO"));		//거래점번호
-		String op_hwnno = CommonUtil.safeObjToStr(map.get("OPRT_JKW_NO"));	//조작자행번호
-		String tecccode = CommonUtil.safeObjToStr(map.get("TECC_C"));		//TECCCODE
-		String fileCnt = CommonUtil.safeObjToStr(map.get("FILECNT"));		//파일개수
-		String docFormC = CommonUtil.safeObjToStr(map.get("DOC_FORM_C"));	//문서양식코드
+		String eDocIdxNo = OldCommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO"));	//전자문서번호
+		int    imgSer    = OldCommonUtil.safeObjToInt(map.get("IMG_SER"));		//이미지일련번호
+		String storPathNm = OldCommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));//저장경로명
+		String procFileNm = OldCommonUtil.safeObjToStr(map.get("PROC_FILE_NM"));//처리파일명
+		String trx_br_c = OldCommonUtil.safeObjToStr(map.get("TRXBRNO"));		//거래점번호
+		String op_hwnno = OldCommonUtil.safeObjToStr(map.get("OPRT_JKW_NO"));	//조작자행번호
+		String tecccode = OldCommonUtil.safeObjToStr(map.get("TECC_C"));		//TECCCODE
+		String fileCnt = OldCommonUtil.safeObjToStr(map.get("FILECNT"));		//파일개수
+		String docFormC = OldCommonUtil.safeObjToStr(map.get("DOC_FORM_C"));	//문서양식코드
 
 		//1 파일복사
-		File cardPath = FileUtil.joinPaths(storPathNm, FileUtil.PATH.CARD);
+		File cardPath = OldFileUtil.joinPaths(storPathNm, OldFileUtil.PATH.CARD);
 		
 		//1.1 복사할 디렉토리 생성
-		FileUtil.mkdirs(storPathNm);
+		OldFileUtil.mkdirs(storPathNm);
 		
 		
 		File orgnPdfFile = new File(storPathNm, procFileNm);
 		File cardPdfFile = new File(cardPath, procFileNm);
 		
-		if(FileUtil.copy(orgnPdfFile, cardPdfFile)) {
+		if(OldFileUtil.copy(orgnPdfFile, cardPdfFile)) {
 			log.info("file copy success");
 		} else {
 			log.info("file copy fail");
@@ -98,7 +98,7 @@ public class CardSendPdfUtil {
 		
 		//2 pdf 파일을 바이너리 문자열로 
 		String pdfData = "";
-		if(FileUtil.toBinaryString(cardPdfFile, pdfData)) {
+		if(OldFileUtil.toBinaryString(cardPdfFile, pdfData)) {
 			return SendResult.FILE_TO_BINARY_FAIL;
 		}
 		
@@ -108,7 +108,7 @@ public class CardSendPdfUtil {
 			socket = new Socket(serverIp, serverPort);
 			socket.setSoTimeout(20*1000);
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 			return SendResult.SOCKET_CONNECT_FAIL;
 		}
 		
@@ -120,11 +120,11 @@ public class CardSendPdfUtil {
 		sendJsonObj.put("psChlCcd","03");
 		sendJsonObj.put("madCrtCcd","01");
 		sendJsonObj.put("etCcd","000");
-		sendJsonObj.put("crtDt",SystemUtil.nowTime("yyyyMMddHHmmssSS").substring(0,16));
+		sendJsonObj.put("crtDt",OldSystemUtil.nowTime("yyyyMMddHHmmssSS").substring(0,16));
 		sendJsonObj.put("crtRmkEn",op_hwnno);
 		sendJsonObj.put("tiRmkEn",op_hwnno);
 		sendJsonObj.put("psHcd",trx_br_c);
-		sendJsonObj.put("crtTmnIpAr",SystemUtil.getHostAddress());
+		sendJsonObj.put("crtTmnIpAr",OldSystemUtil.getHostAddress());
 		sendJsonObj.put("eccNo",tecccode);
 		sendJsonObj.put("fileCnt",fileCnt);
 		sendJsonObj.put("frmCd",docFormC);
@@ -179,7 +179,7 @@ public class CardSendPdfUtil {
 			String recvMsg = new String(recvBuffer);
 			
 			//   응답확인
-			if(0==recvBytes || CommonUtil.isEmpty(recvMsg)) {
+			if(0==recvBytes || OldCommonUtil.isEmpty(recvMsg)) {
 				sendResult = SendResult.RESPONSE_DATA_WRONG;
 			} else {
 				//응답 수신 패킷 생성
@@ -224,13 +224,13 @@ public class CardSendPdfUtil {
 
 			}//if(0==recvBytes || CUtil.isEmpty(recvMsg)) {
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 			sendResult = SendResult.FAIL;
 		} finally {
-			if(CommonUtil.isNotEmpty(bais)) { try {bais.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(in)) { try {in.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(out)) { try {out.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(socket)) { try {socket.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(bais)) { try {bais.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(in)) { try {in.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(out)) { try {out.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(socket)) { try {socket.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 		
 		return sendResult;

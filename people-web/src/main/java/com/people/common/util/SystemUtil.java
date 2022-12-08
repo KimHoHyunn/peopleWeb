@@ -23,8 +23,8 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Component
-@Configuration
 public class SystemUtil {
 	
 	public String getHostName() {
@@ -42,13 +42,4 @@ public class SystemUtil {
 			return ""; 
 		}
 	}
-
-	private Properties getProperties(File file) throws IOException {
-		FileInputStream fis = new FileInputStream(file);
-		Properties properties = new Properties();
-		properties.load(fis);
-		fis.close();
-		return properties;
-	}
-	
 }

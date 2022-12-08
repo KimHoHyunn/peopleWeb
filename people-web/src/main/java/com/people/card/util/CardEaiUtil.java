@@ -21,9 +21,9 @@ import org.jdom2.output.XMLOutputter;
 
 import com.people.card.vo.EpsBodyVO;
 import com.people.card.vo.EpsHeaderVO;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
+import com.people.common.oldutil.OldSystemUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -59,20 +59,20 @@ public class CardEaiUtil {
 		setData(map);
 		
 		//xml 생성을 위한 데이터 get
-		String storPathNm = CommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));
-		String eDocIdxNo  = CommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO"));
-		String docFormC   = CommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
+		String storPathNm = OldCommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));
+		String eDocIdxNo  = OldCommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO"));
+		String docFormC   = OldCommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
 		
 		//xml 생성할 디렉토리 지정
-		File xmlPath = FileUtil.joinPaths(storPathNm, FileUtil.PATH.CARD);
-		FileUtil.mkdirs(xmlPath.getPath());
+		File xmlPath = OldFileUtil.joinPaths(storPathNm, OldFileUtil.PATH.CARD);
+		OldFileUtil.mkdirs(xmlPath.getPath());
 
 		//xml file name
 		String sendFileName = "S_"+eDocIdxNo+"_"+docFormC+".xml";
 		String recvFileName = "R_"+eDocIdxNo+"_"+docFormC+".xml";
 		
 		//3 send xml 생성
-		File sendFile = makeSendXml(FileUtil.joinPaths(xmlPath.getPath(), sendFileName));
+		File sendFile = makeSendXml(OldFileUtil.joinPaths(xmlPath.getPath(), sendFileName));
 		if(sendFile.exists()) {
 			log.info("send xml create success");
 		} else {
@@ -82,7 +82,7 @@ public class CardEaiUtil {
 		
 		//4 EAI 통신
 		String url = "http://"+eai_ip+":8080/inf/SCOM1110A";
-		File recvFile = sendEps(url, sendFile, FileUtil.joinPaths(xmlPath.getPath(), recvFileName));
+		File recvFile = sendEps(url, sendFile, OldFileUtil.joinPaths(xmlPath.getPath(), recvFileName));
 		
 		if(recvFile.exists()) {
 			log.info("receive xml create success");
@@ -139,7 +139,7 @@ public class CardEaiUtil {
 					responseString+=strLine;
 				}
 				
-				if(CommonUtil.isEmpty(responseString)) {
+				if(OldCommonUtil.isEmpty(responseString)) {
 					log.error("Nothing response message");
 				} else {
 					Document doc = new SAXBuilder().build(new StringReader(responseString));
@@ -150,14 +150,14 @@ public class CardEaiUtil {
 				log.info("http response code = "+ rc);
 			}
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
-			if(CommonUtil.isNotEmpty(fisSend)) { try {fisSend.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(isrSend)) { try {isrSend.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(brSend)) { try {brSend.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(os)) { try {os.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(isrRecv)) { try {isrRecv.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(brRecv)) { try {brRecv.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(fisSend)) { try {fisSend.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(isrSend)) { try {isrSend.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(brSend)) { try {brSend.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(os)) { try {os.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(isrRecv)) { try {isrRecv.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(brRecv)) { try {brRecv.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 		return recvFile;
 	}
@@ -188,13 +188,13 @@ public class CardEaiUtil {
 			serializer.output(doc, out);
 			out.flush();
 		} catch (IOException e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		} finally {
-			if(CommonUtil.isNotEmpty(out)) {
+			if(OldCommonUtil.isNotEmpty(out)) {
 				try {
 					out.close();
 				} catch (IOException e) {
-					log.error(SystemUtil.getExceptionLog(e));
+					log.error(OldSystemUtil.getExceptionLog(e));
 				}
 			}
 		}
@@ -205,14 +205,14 @@ public class CardEaiUtil {
 		body = new EpsBodyVO();
 		
 		//현재시간
-		String nowTime = CommonUtil.safeObjToStr(map.get("nowTime"));
-		if(CommonUtil.isEmpty(nowTime)) {
-			nowTime = SystemUtil.nowTime("yyyyMMddHHmmssSS").substring(0,16);
+		String nowTime = OldCommonUtil.safeObjToStr(map.get("nowTime"));
+		if(OldCommonUtil.isEmpty(nowTime)) {
+			nowTime = OldSystemUtil.nowTime("yyyyMMddHHmmssSS").substring(0,16);
 		}
 		
 		//중복방지를 위한 seqNum 추가
-		String seqNum = CommonUtil.safeObjToStr(map.get("seqNum"));
-		if(CommonUtil.isEmpty(seqNum)) {
+		String seqNum = OldCommonUtil.safeObjToStr(map.get("seqNum"));
+		if(OldCommonUtil.isEmpty(seqNum)) {
 			seqNum = "01";
 		} else if(1==seqNum.length()) {
 			seqNum = "0"+seqNum;
@@ -220,13 +220,13 @@ public class CardEaiUtil {
 			seqNum = seqNum.substring(seqNum.length()-2);
 		}
 		
-		String ip_adr = SystemUtil.getHostAddress(); 					//IP
+		String ip_adr = OldSystemUtil.getHostAddress(); 					//IP
 		String chan_tel_snd_dttm = nowTime;							//전문전송일시
-		String trx_br_c = CommonUtil.safeObjToStr(map.get("TRXBRNO"));	//거래점번호
-		String op_hwnno = CommonUtil.safeObjToStr(map.get("OPRT_JKW_NO"));	//조작자행번호
+		String trx_br_c = OldCommonUtil.safeObjToStr(map.get("TRXBRNO"));	//거래점번호
+		String op_hwnno = OldCommonUtil.safeObjToStr(map.get("OPRT_JKW_NO"));	//조작자행번호
 		String glb_uiq_id = nowTime+"DGW"+"800"+op_hwnno+seqNum;
 		String svr_tel_rcv_dttm = nowTime;							//전문수신일시
-		String bpr_ecc_n = CommonUtil.safeObjToStr(map.get("TECC_C"));	//TECC Code
+		String bpr_ecc_n = OldCommonUtil.safeObjToStr(map.get("TECC_C"));	//TECC Code
 		
 		//header set
 		header.setEdoc_ui_g("01");

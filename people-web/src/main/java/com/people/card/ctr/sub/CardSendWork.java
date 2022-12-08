@@ -16,9 +16,9 @@ import com.people.card.util.EpsUtil;
 import com.people.card.vo.EpsBodyVO;
 import com.people.card.vo.EpsHeaderVO;
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.step.EDocProcStep;
 import com.people.common.vo.EDocErrHisVO;
 import com.people.common.vo.SndRstVO;
@@ -45,8 +45,8 @@ public class CardSendWork implements Callable<SndRstVO> {
 	}
 	
 	private void sendCardPPR() {
-		String eDocIdxNo = CommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO"));
-		int    imgSer    = CommonUtil.objectToInt(map.get("IMG_SER"));
+		String eDocIdxNo = OldCommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO"));
+		int    imgSer    = OldCommonUtil.objectToInt(map.get("IMG_SER"));
 
 		sndRstVO.setEDocIdxNo(eDocIdxNo);
 		sndRstVO.setDbResult(false);
@@ -87,12 +87,12 @@ public class CardSendWork implements Callable<SndRstVO> {
 	 * 4 card 전송 (img 보낸고 inf 보냄)
 	 */
 	private void sendCard() throws IOException {
-		String eDocIdxNo = CommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO")); //전자문서번호
-		int    imgSer    = CommonUtil.safeObjToInt(map.get("IMG_SER"));		//이미지일련번호
-		String docFormC = CommonUtil.safeObjToStr(map.get("DOC_FORM_C"));	//문서양식코드
-		String storPathNm = CommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));//저장경로
-		String imgIdxNo = CommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));	//이미지인덱스번호(BPR이미지인덱스번호)
-		String eDocG = CommonUtil.safeObjToStr(map.get("E_DOC_G"));			//전자문서구분
+		String eDocIdxNo = OldCommonUtil.safeObjToStr(map.get("E_DOC_IDX_NO")); //전자문서번호
+		int    imgSer    = OldCommonUtil.safeObjToInt(map.get("IMG_SER"));		//이미지일련번호
+		String docFormC = OldCommonUtil.safeObjToStr(map.get("DOC_FORM_C"));	//문서양식코드
+		String storPathNm = OldCommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));//저장경로
+		String imgIdxNo = OldCommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));	//이미지인덱스번호(BPR이미지인덱스번호)
+		String eDocG = OldCommonUtil.safeObjToStr(map.get("E_DOC_G"));			//전자문서구분
 		
 		sndRstVO.setEDocIdxNo(eDocIdxNo);
 		sndRstVO.setDbResult(false);
@@ -103,7 +103,7 @@ public class CardSendWork implements Callable<SndRstVO> {
 		
 		recvFile = ceu.send(map);
 		
-		if(CommonUtil.isEmpty(recvFile)) {
+		if(OldCommonUtil.isEmpty(recvFile)) {
 			EdsDao.registerErrHis(eDocIdxNo, imgSer, 2, "0702", "EPS Send Fail");
 			sndRstVO.setStatusCode("2");
 			sndRstVO.setMsg("EPS Send Fail");
@@ -131,12 +131,12 @@ public class CardSendWork implements Callable<SndRstVO> {
 		} 
 		
 		//tif 파일을 카드전송용 이름으로 변환하기 위해 card 디렉토리에 복사
-		String imgFilePath = FileUtil.joinPaths(storPathNm, FileUtil.PATH.IMAGE).getPath();
-		String imgFileName = CommonUtil.getInfCodeType(docFormC) + ","+imgIdxNo+".tif";
+		String imgFilePath = OldFileUtil.joinPaths(storPathNm, OldFileUtil.PATH.IMAGE).getPath();
+		String imgFileName = OldCommonUtil.getInfCodeType(docFormC) + ","+imgIdxNo+".tif";
 		
-		File sourceImgFile = FileUtil.joinPaths(imgFilePath, imgFileName);
+		File sourceImgFile = OldFileUtil.joinPaths(imgFilePath, imgFileName);
 		
-		if(FileUtil.exists(sourceImgFile) == false) {
+		if(OldFileUtil.exists(sourceImgFile) == false) {
 			EDocErrHisVO errVO = new EDocErrHisVO();
 			String eDocErrctnt = "tif file not found";
 			
@@ -156,7 +156,7 @@ public class CardSendWork implements Callable<SndRstVO> {
 						}
 					}
 					
-					if(FileUtil.exists(tFile)) {
+					if(OldFileUtil.exists(tFile)) {
 						if(tFile.renameTo(sourceImgFile)) {
 							DaoUpdate.updateEDocFileMng(eDocIdxNo, imgSer, 2, 1, EDocProcStep.BPR);
 						}
@@ -172,15 +172,15 @@ public class CardSendWork implements Callable<SndRstVO> {
 		
 		String bpr_map_cd = body.getData_flat_bpr_map_cd();
 		String bpr_scn_crt_ccd = body.getData_flat_bpr_scn_crt_ccd();
-		String bpr_crt_dt = CommonUtil.safeObjToStr(map.get("BPR_CRT_DT")); //스캔시간
-		String bpr_ti_dt = CommonUtil.safeObjToStr(map.get("BPR_TI_DT")); //전송시간
+		String bpr_crt_dt = OldCommonUtil.safeObjToStr(map.get("BPR_CRT_DT")); //스캔시간
+		String bpr_ti_dt = OldCommonUtil.safeObjToStr(map.get("BPR_TI_DT")); //전송시간
 		String op_hwnno = header.getOp_hwnno();
 		String trx_br_c = body.getData_flat_bpr_rv_hcd(); //전송지점코드이나 카드사 기준점번호
 		String proc_rslt_yn = body.getData_flat_bpr_rcd(); //bpr응답코드
 		String bpr_pcd = body.getData_flat_bpr_pcd(); //bpr 경로 코드
 		String bpr_img_key_vl = body.getData_flat_bpr_img_key_vl();
 		
-		String hms = SystemUtil.nowTime("HHmmss");
+		String hms = OldSystemUtil.nowTime("HHmmss");
 		
 		String strImgSer = "";
 		if(9>=imgSer) {
@@ -192,9 +192,9 @@ public class CardSendWork implements Callable<SndRstVO> {
 		
 		String targetImgFilePath = recvFile.getParent();
 		String targerImgFileName = bpr_img_key_vl+hms+op_hwnno+strImgSer+".tif";
-		File targetImgFile = FileUtil.joinPaths(targetImgFilePath, targerImgFileName);
+		File targetImgFile = OldFileUtil.joinPaths(targetImgFilePath, targerImgFileName);
 		
-		boolean copyResut = FileUtil.copy(sourceImgFile, targetImgFile);
+		boolean copyResut = OldFileUtil.copy(sourceImgFile, targetImgFile);
 		
 		if(false == copyResut) {
 			EdsDao.registerErrHis(eDocIdxNo, imgSer, 2, "0705", "tif file copy fail");
@@ -254,7 +254,7 @@ public class CardSendWork implements Callable<SndRstVO> {
 		//inf 생성시작
 		String infFilePath = targetImgFilePath;
 		String infFileName = bpr_img_key_vl+hms+strImgSer+".inf";
-		File infFile = FileUtil.joinPaths(infFilePath, infFileName);
+		File infFile = OldFileUtil.joinPaths(infFilePath, infFileName);
 		
 		boolean infResult = cicu.createInfFile(infFile);
 		

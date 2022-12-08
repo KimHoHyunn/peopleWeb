@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.OldCommonUtil;
 
 /**
  * 공통전문조립
@@ -67,7 +67,7 @@ public class Packet {
 	 */
 	private Item getItem(String name) {
 		Item item = nameAccess.get(name.toUpperCase());
-		if(CommonUtil.isEmpty(item)) {
+		if(OldCommonUtil.isEmpty(item)) {
 			throw new RuntimeException("There is no item with the name = " + name);
 		}
 		return item;
@@ -112,7 +112,7 @@ public class Packet {
 			sb.append(item.getData());
 		}
 		
-		if(CommonUtil.isEmpty(encodingCharsetName)) {
+		if(OldCommonUtil.isEmpty(encodingCharsetName)) {
 			data = sb.toString().getBytes();
 		} else {
 			data = sb.toString().getBytes(encodingCharsetName);
@@ -125,13 +125,13 @@ public class Packet {
 	 */
 	public void parse(byte[] data) throws UnsupportedEncodingException {
 		//가변길이 패킷 때문에 주석처리
-		if(CommonUtil.isEmpty(data) /*|| data.length != this.length() */) {
+		if(OldCommonUtil.isEmpty(data) /*|| data.length != this.length() */) {
 			throw new RuntimeException("Data is null or invalid length");
 		}
 		
 		String strData = "";
 		
-		if(CommonUtil.isEmpty(encodingCharsetName)) {
+		if(OldCommonUtil.isEmpty(encodingCharsetName)) {
 			strData = new String(data);
 		} else {
 			strData = new String(data, encodingCharsetName);
@@ -142,7 +142,7 @@ public class Packet {
 		for(Item item : items) {
 			int len = item.getLength();
 			
-			if(0 == len && !CommonUtil.isEmpty(item.getRefName()) ) {
+			if(0 == len && !OldCommonUtil.isEmpty(item.getRefName()) ) {
 				len = Integer.valueOf(getValue(item.getRefName()).toString()).intValue();
 			}
 			

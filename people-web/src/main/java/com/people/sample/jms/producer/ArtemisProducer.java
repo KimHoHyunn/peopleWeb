@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.people.common.consts.MessageType;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.vo.MessageVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class ArtemisProducer {
 			String sendMsg = objectMapper.writeValueAsString(messageVO);
 			return writeQueue(sendMsg);
 		} catch (Exception e) {
-			SystemUtil.getExceptionLog(e);
+			OldSystemUtil.getExceptionLog(e);
 			e.printStackTrace();
 			return false;
 		}
@@ -59,7 +59,7 @@ public class ArtemisProducer {
 			String sendMsg = objectMapper.writeValueAsString(messageVO);
 			return writeQueue(sendMsg);
 		} catch (Exception e) {
-			SystemUtil.getExceptionLog(e);
+			OldSystemUtil.getExceptionLog(e);
 			e.printStackTrace();
 			return false;
 		}
@@ -76,7 +76,7 @@ public class ArtemisProducer {
 			String sendMsg = objectMapper.writeValueAsString(messageVO);
 			return writeQueue(sendMsg);
 		} catch (Exception e) {
-			SystemUtil.getExceptionLog(e);
+			OldSystemUtil.getExceptionLog(e);
 			e.printStackTrace();
 			return false;
 		}
@@ -91,7 +91,7 @@ public class ArtemisProducer {
 			jmsTemplate.convertAndSend(destinationQueue, msg);
 			return true;
 		} catch (Exception e) {
-			SystemUtil.getExceptionLog(e);
+			OldSystemUtil.getExceptionLog(e);
 			e.printStackTrace();
 			return false;
 		}

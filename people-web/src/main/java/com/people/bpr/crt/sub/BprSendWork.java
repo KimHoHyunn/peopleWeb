@@ -19,9 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.people.bpr.dao.DaoUpdate;
 import com.people.bpr.util.BprInfCreateUtil;
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.vo.EDocErrHisVO;
 import com.people.common.vo.SndRstVO;
 
@@ -68,12 +68,12 @@ public class BprSendWork implements Callable<SndRstVO> {
 		this.eDocInfo = eDocInfo;
 		this.inIdxPath = inIdxPath;
 		
-		this.md_eDocSer = CommonUtil.safeObjToStr(eDocInfo.get("E_DOC_IDX_NO"));
-		this.docFormC   = CommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
+		this.md_eDocSer = OldCommonUtil.safeObjToStr(eDocInfo.get("E_DOC_IDX_NO"));
+		this.docFormC   = OldCommonUtil.safeObjToStr(map.get("DOC_FORM_C"));
 	}
 	
 	public SndRstVO call() {
-		if(CommonUtil.isNotEmpty(md_eDocSer)) {
+		if(OldCommonUtil.isNotEmpty(md_eDocSer)) {
 			sndRstVO.setEDocIdxNo(md_eDocSer);
 		}
 		
@@ -92,45 +92,45 @@ public class BprSendWork implements Callable<SndRstVO> {
 	
 	private boolean generateInf(String imgJobU) {
 		/* inf 파일 수집-------------------------------------------------------------------------------------------------------*/
-		String c_scanHwnno		= CommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//스캔행원번호
-		String c_sendHwnno		= CommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//전송행원번호
-		String c_affairsHwnno	= CommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//업무담당자행번호
-		String md_scnHwnno		= CommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//접속자 행번호
+		String c_scanHwnno		= OldCommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//스캔행원번호
+		String c_sendHwnno		= OldCommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//전송행원번호
+		String c_affairsHwnno	= OldCommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//업무담당자행번호
+		String md_scnHwnno		= OldCommonUtil.safeObjToStr(eDocInfo.get("PORT_JKW_NO"));//접속자 행번호
 
-		String c_brno			= CommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));//점번호
-		String c_affirsBrno		= CommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));//업무담당자점번호
-		String md_scnBrno		= CommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));//영업점번호
+		String c_brno			= OldCommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));//점번호
+		String c_affirsBrno		= OldCommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));//업무담당자점번호
+		String md_scnBrno		= OldCommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));//영업점번호
 
-		String c_scanDt			= CommonUtil.safeObjToStr(map.get("DR_DTTM"));//스캔일자
-		String c_sendDt			= CommonUtil.safeObjToStr(map.get("DR_DTTM"));//전송일자
-		String md_memo			= CommonUtil.safeObjToStr(eDocInfo.get("MEMO"));//메모
+		String c_scanDt			= OldCommonUtil.safeObjToStr(map.get("DR_DTTM"));//스캔일자
+		String c_sendDt			= OldCommonUtil.safeObjToStr(map.get("DR_DTTM"));//전송일자
+		String md_memo			= OldCommonUtil.safeObjToStr(eDocInfo.get("MEMO"));//메모
 
 		//index key
-		String if_imgKey		= CommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));	//이미지 키
-		String fi_storPathNm	= CommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));	//이미지 저장 경로
-		String md_dataDrdt		= CommonUtil.safeObjToStr(map.get("TO_DATE"));		//전송일자
-		md_imgKey               = CommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));
-		md_eccNo                = CommonUtil.safeObjToStr(map.get("TECC_C"));
+		String if_imgKey		= OldCommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));	//이미지 키
+		String fi_storPathNm	= OldCommonUtil.safeObjToStr(map.get("STOR_PATH_NM"));	//이미지 저장 경로
+		String md_dataDrdt		= OldCommonUtil.safeObjToStr(map.get("TO_DATE"));		//전송일자
+		md_imgKey               = OldCommonUtil.safeObjToStr(map.get("IMG_IDX_NO"));
+		md_eccNo                = OldCommonUtil.safeObjToStr(map.get("TECC_C"));
 
-		String md_trxdt			= CommonUtil.safeObjToStr(map.get("TRXDT"));			//영업점거래일자
-		String md_brno			= CommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));	//영업점번호
+		String md_trxdt			= OldCommonUtil.safeObjToStr(map.get("TRXDT"));			//영업점거래일자
+		String md_brno			= OldCommonUtil.safeObjToStr(eDocInfo.get("TRXBRNO"));	//영업점번호
 		
-		md_eDocIndvIdxNo        = CommonUtil.safeObjToStr(map.get("E_DOC_INV_IDX_NO"));//전자문서 개발인덱스번호
-		String md_eDocG			= CommonUtil.safeObjToStr(map.get("E_DOC_G"));//전자문서구분
-		imgSer                  = CommonUtil.safeObjToInt(map.get("IMG_SER"));
-		String bpr_e_upmu_g		= CommonUtil.safeObjToStr(map.get("BPR_E_UPMU_G"));
-		String md_scanYn		= CommonUtil.safeObjToStr(map.get("SCANYN"));//첨부스캔여부
-		String md_ingamYn		= CommonUtil.safeObjToStr(map.get("INGAMYN"));//인감여부
+		md_eDocIndvIdxNo        = OldCommonUtil.safeObjToStr(map.get("E_DOC_INV_IDX_NO"));//전자문서 개발인덱스번호
+		String md_eDocG			= OldCommonUtil.safeObjToStr(map.get("E_DOC_G"));//전자문서구분
+		imgSer                  = OldCommonUtil.safeObjToInt(map.get("IMG_SER"));
+		String bpr_e_upmu_g		= OldCommonUtil.safeObjToStr(map.get("BPR_E_UPMU_G"));
+		String md_scanYn		= OldCommonUtil.safeObjToStr(map.get("SCANYN"));//첨부스캔여부
+		String md_ingamYn		= OldCommonUtil.safeObjToStr(map.get("INGAMYN"));//인감여부
 		
-		if(CommonUtil.isEmpty(docFormC)) {
+		if(OldCommonUtil.isEmpty(docFormC)) {
 			return processNullFormCode(md_eDocIndvIdxNo, imgSer);
 		}
 		
 		//서식코드를 내부표준 형식으로 변경 0-000-0000
-		md_formC = CommonUtil.getInfCodeType(docFormC);
+		md_formC = OldCommonUtil.getInfCodeType(docFormC);
 		
 		//ECC 코드 추출 예) '12345121212121212121 < SLKFJOASEJLKAJDFLKASJELKJLD DFJEKJFD5Z >' => '12345121212121212121'
-		md_eccNo = CommonUtil.getEccNo(md_eccNo);
+		md_eccNo = OldCommonUtil.getEccNo(md_eccNo);
 		/* inf 파일 수집-------------------------------------------------------------------------------------------------------*/
 		
 		/**
@@ -142,18 +142,18 @@ public class BprSendWork implements Callable<SndRstVO> {
 		 *  - 경로 : /idx
 		 *  - 확장자 : .idx
 		 */
-		String jobPath = IMG_JOB_U.IDX.equals(imgJobU) ? FileUtil.PATH.IDX : FileUtil.PATH.IMAGE;
-		String jobExtt = IMG_JOB_U.IDX.equals(imgJobU) ? FileUtil.EXT.IDX : FileUtil.EXT.IMAGE;
+		String jobPath = IMG_JOB_U.IDX.equals(imgJobU) ? OldFileUtil.PATH.IDX : OldFileUtil.PATH.IMAGE;
+		String jobExtt = IMG_JOB_U.IDX.equals(imgJobU) ? OldFileUtil.EXT.IDX : OldFileUtil.EXT.IMAGE;
 		
 		//전송할 이미지 파일 리스트 생성 및 존재 확인
 		String tmpFileNm = md_formC + "," + md_imgKey + jobExtt;
-		File presentFile = FileUtil.joinPaths(fi_storPathNm, jobPath, tmpFileNm);
+		File presentFile = OldFileUtil.joinPaths(fi_storPathNm, jobPath, tmpFileNm);
 		
 		if(IMG_JOB_U.IDX.equals(imgJobU)) {
 			//포스틱메모
-			File inFile = FileUtil.joinPaths(inIdxPath, docFormC+jobExtt);
-			if(FileUtil.exists(inFile)) {
-				FileUtil.copy(inFile, presentFile);
+			File inFile = OldFileUtil.joinPaths(inIdxPath, docFormC+jobExtt);
+			if(OldFileUtil.exists(inFile)) {
+				OldFileUtil.copy(inFile, presentFile);
 				fileList.add(presentFile);
 			}
 		} else {
@@ -162,17 +162,17 @@ public class BprSendWork implements Callable<SndRstVO> {
 		}
 		
 		//첨부서식이 있는 경우 파일 리스트에 추가
-		if(CommonUtil.isNotEmpty(mergeDocList)) {
+		if(OldCommonUtil.isNotEmpty(mergeDocList)) {
 			for(String mergeDocFormC : mergeDocList) {
-				String tmpSubFileNm = CommonUtil.getInfCodeType(mergeDocFormC)+","+md_imgKey+jobExtt;
-				String tmpStorPath  = CommonUtil.safeReplaceAll(fi_storPathNm, masterDocFormC, mergeDocFormC);
+				String tmpSubFileNm = OldCommonUtil.getInfCodeType(mergeDocFormC)+","+md_imgKey+jobExtt;
+				String tmpStorPath  = OldCommonUtil.safeReplaceAll(fi_storPathNm, masterDocFormC, mergeDocFormC);
 				
-				File subFile = FileUtil.joinPaths(tmpStorPath, jobPath, tmpSubFileNm);
+				File subFile = OldFileUtil.joinPaths(tmpStorPath, jobPath, tmpSubFileNm);
 				if(IMG_JOB_U.IDX.equals(imgJobU)) {
 					//포스틱메모
-					File inFile = FileUtil.joinPaths(inIdxPath, docFormC+jobExtt);
-					if(FileUtil.exists(inFile)) {
-						FileUtil.copy(inFile, presentFile);
+					File inFile = OldFileUtil.joinPaths(inIdxPath, docFormC+jobExtt);
+					if(OldFileUtil.exists(inFile)) {
+						OldFileUtil.copy(inFile, presentFile);
 						fileList.add(presentFile);
 					} else {
 						continue;
@@ -274,8 +274,8 @@ public class BprSendWork implements Callable<SndRstVO> {
 		//inf 정보생성---------------------------------------------------------------------------------------------------
 		
 		//inf 파일 생성
-		String infFileName = md_imgKey + FileUtil.EXT.INF;
-		infFile = FileUtil.joinPaths(fi_storPathNm, jobPath, infFileName);
+		String infFileName = md_imgKey + OldFileUtil.EXT.INF;
+		infFile = OldFileUtil.joinPaths(fi_storPathNm, jobPath, infFileName);
 		
 		boolean infResult = bicu.createInfFile(infFile);
 		
@@ -309,7 +309,7 @@ public class BprSendWork implements Callable<SndRstVO> {
 		File searchFile = new File(file.getParent());
 		File[] files = searchFile.listFiles();
 		if(errVO.setData(imgFileNm, imgSer, imgSer, eDocIndvIdxNo, eDocErrCtnt)) {
-			if(CommonUtil.isEmpty(files)) {
+			if(OldCommonUtil.isEmpty(files)) {
 				EdsDao.insertErrHis(errVO);
 				increaseTryCntOfMergeDocList();
 				sndRstVO.setStatusCode("2");
@@ -328,7 +328,7 @@ public class BprSendWork implements Callable<SndRstVO> {
 					
 				}
 				
-				if(FileUtil.exists(tFile)) {
+				if(OldFileUtil.exists(tFile)) {
 					if(tFile.renameTo(file) == false) {
 						EdsDao.insertErrHis(errVO);
 						increaseTryCntOfMergeDocList();
@@ -364,7 +364,7 @@ public class BprSendWork implements Callable<SndRstVO> {
 	}
 	
 	private void increaseTryCntOfMergeDocList() {
-		if(CommonUtil.isNotEmpty(mergeDocList)) {
+		if(OldCommonUtil.isNotEmpty(mergeDocList)) {
 			for(String mergeDocFormC : mergeDocList) {
 				DaoUpdate.updateEdocFileMngTryCntPlus(md_eDocSer, 999, 2, mergeDocFormC );
 			}
@@ -381,7 +381,7 @@ public class BprSendWork implements Callable<SndRstVO> {
 			URL cUrl = new URL(url);
 			conn = (HttpURLConnection) cUrl.openConnection();
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 		}
 		
 		if(null == conn) {
@@ -431,10 +431,10 @@ public class BprSendWork implements Callable<SndRstVO> {
 			Map<String, Object> resultMap = mapper.readValue(resultStr, new TypeReference<Map<String, Object>>() {});
 			
 			if(null != resultMap) {
-				String bprSuccYn = CommonUtil.safeObjToStr(resultMap.get("succYn"));
-				String bprmsg    = CommonUtil.safeObjToStr(resultMap.get("msg"));
+				String bprSuccYn = OldCommonUtil.safeObjToStr(resultMap.get("succYn"));
+				String bprmsg    = OldCommonUtil.safeObjToStr(resultMap.get("msg"));
 				
-				if(CommonUtil.isNotEmpty(bprSuccYn) && CommonUtil.isNotEmpty(bprmsg) && "Y".equals(bprSuccYn)) {
+				if(OldCommonUtil.isNotEmpty(bprSuccYn) && OldCommonUtil.isNotEmpty(bprmsg) && "Y".equals(bprSuccYn)) {
 					sndRstVO.setStatusCode("1");
 					sndRstVO.setMsg("send success");
 					
@@ -447,7 +447,7 @@ public class BprSendWork implements Callable<SndRstVO> {
 						for(int i=1; i< fileList.size() ; i++) {
 							File subFile = fileList.get(i);
 							String subDocFormC = subFile.getName().split(",")[0];
-							docFormCList.add(CommonUtil.safeReplaceAll(subDocFormC, "-", ""));
+							docFormCList.add(OldCommonUtil.safeReplaceAll(subDocFormC, "-", ""));
 						}
 					}
 					
@@ -478,10 +478,10 @@ public class BprSendWork implements Callable<SndRstVO> {
 		} catch (Exception e) {
 			processBprSndWorkFailure("3", md_eDocIndvIdxNo, "0605", "send fail", imgSer);
 		} finally {
-			if(CommonUtil.isNotEmpty(conn)) { try {conn = null;} catch(Exception e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(bos)) { try {bos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(dos)) { try {dos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(is)) { try {is.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(conn)) { try {conn = null;} catch(Exception e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(bos)) { try {bos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(dos)) { try {dos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(is)) { try {is.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 		
 	}
@@ -496,11 +496,11 @@ public class BprSendWork implements Callable<SndRstVO> {
 				dos.write(buff, 0, len);
 			}
 		} catch (Exception e) {
-			log.error(SystemUtil.getExceptionLog(e));
+			log.error(OldSystemUtil.getExceptionLog(e));
 			throw e;
 		} finally {
-			if(CommonUtil.isNotEmpty(dis)) { try {dis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
-			if(CommonUtil.isNotEmpty(dos)) { try {dos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(dis)) { try {dis.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
+			if(OldCommonUtil.isNotEmpty(dos)) { try {dos.close();} catch(IOException e) {log.error(OldSystemUtil.getExceptionLog(e));}}
 		}
 	}
 }

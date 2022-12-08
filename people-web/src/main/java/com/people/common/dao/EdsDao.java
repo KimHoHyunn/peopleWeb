@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.step.EDocProcStep;
 import com.people.common.vo.EDocErrHisVO;
 
@@ -41,7 +41,7 @@ public class EdsDao {
 		Properties props = new Properties();//SystemUtil.getCommonProperties();
 		
 		//호스트이름가져오기
-		String hostName = SystemUtil.getHostName().toUpperCase();
+		String hostName = OldSystemUtil.getHostName().toUpperCase();
 		
 		//호스트명으로 실행환경
 		

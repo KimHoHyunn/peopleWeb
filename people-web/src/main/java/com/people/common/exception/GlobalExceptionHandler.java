@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.vo.ErrorVO;
 
 @RestControllerAdvice
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorVO> handleServerException(Exception ex) {
         return new ResponseEntity<ErrorVO>(  new ErrorVO(   INTERNAL_SERVER_ERROR.getHttpStatus()
         		                                          , INTERNAL_SERVER_ERROR.getResultCode()
-        		                                          , SystemUtil.getExceptionLog(ex)
+        		                                          , OldSystemUtil.getExceptionLog(ex)
         		                                        )
         		                           , HttpStatus.INTERNAL_SERVER_ERROR
         		                          );

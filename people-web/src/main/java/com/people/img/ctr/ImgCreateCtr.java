@@ -3,7 +3,7 @@ package com.people.img.ctr;
 import java.util.List;
 import java.util.Properties;
 
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.img.ctr.sub.ImgCreateList;
 
 public class ImgCreateCtr {

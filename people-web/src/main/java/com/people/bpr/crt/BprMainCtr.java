@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.people.bpr.dao.DaoSelect;
 import com.people.common.dao.EdsDao;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.SystemUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.vo.ConfigVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public class BprMainCtr {
 		//한번에 처리건수 제한 (configVO.getTargetMaxCnt) -- rownum으로 조건 걸어서 제한. 페이징처리와 비슷
 		List<Map<String, Object>> eDocInfoList = DaoSelect.selectTarget(configVO);
 		
-		if(CommonUtil.isNotEmpty(eDocInfoList)) {
+		if(OldCommonUtil.isNotEmpty(eDocInfoList)) {
 			for(Map<String, Object> eDocInfo : eDocInfoList) {
 				BprSendCtr bprSendCtr = new BprSendCtr();
 				bprSendCtr.procJobMain(eDocInfo, configVO.getThreadPoolSize(), configVO.getBprSendG());
@@ -60,7 +60,7 @@ public class BprMainCtr {
 					try {
 						Thread.sleep(configVO.getSendSleepval());
 					} catch (Exception e) {
-						log.error(SystemUtil.getExceptionLog(e));
+						log.error(OldSystemUtil.getExceptionLog(e));
 					}
 				}
 			}

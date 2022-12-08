@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.people.common.config.CustomPropertyConfig;
-import com.people.common.oldutil.CommonUtil;
-import com.people.common.oldutil.FileUtil;
+import com.people.common.oldutil.OldCommonUtil;
+import com.people.common.oldutil.OldFileUtil;
 import com.people.common.util.PropertiesUtil;
 
 @RestController
@@ -37,7 +37,7 @@ public class PropertiesController {
 		try {
 			ret.add(propertiesUtil.getCommonPropIs());
 			ret.add(propertiesUtil.getCustomPropIs());
-			ret.add(FileUtil.basePath);
+			ret.add(OldFileUtil.basePath);
 			return ResponseEntity.ok().body(ret);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

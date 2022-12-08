@@ -1,6 +1,6 @@
 package com.people.common.packet;
 
-import com.people.common.oldutil.CommonUtil;
+import com.people.common.oldutil.OldCommonUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -41,7 +41,7 @@ public class Item {
 	}
 	
 	public void setValue(Object value) {
-		if(CommonUtil.isEmpty(value)) {
+		if(OldCommonUtil.isEmpty(value)) {
 			value = ( this.type == Type.NUM ? 0 : "" );
 		} 
 		this.value = value;

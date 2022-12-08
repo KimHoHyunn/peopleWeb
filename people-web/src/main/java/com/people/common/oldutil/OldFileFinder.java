@@ -8,8 +8,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class FileFinder {
-	private FileFinder() {}
+public final class OldFileFinder {
+	private OldFileFinder() {}
 	
 	public static final FileFilter DIRECTORY_FILTER = new FileFilter() {
 		public boolean accept(File pathName) {
@@ -48,7 +48,7 @@ public final class FileFinder {
 		List<File> foundFiles = new ArrayList<File>();
 		
 		if(rootFile.isDirectory()) {
-			File[] subDirectories = rootFile.listFiles(FileFinder.DIRECTORY_FILTER);
+			File[] subDirectories = rootFile.listFiles(OldFileFinder.DIRECTORY_FILTER);
 			
 			for(int i=0; i < subDirectories.length ; i++) {
 				ArrayList<File> temp_foundFiles = new ArrayList<File>();

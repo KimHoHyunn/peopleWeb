@@ -7,9 +7,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Component
 public final class FileFinder {
-	private FileFinder() {}
 	
 	public  final FileFilter DIRECTORY_FILTER = new FileFilter() {
 		public boolean accept(File pathName) {
