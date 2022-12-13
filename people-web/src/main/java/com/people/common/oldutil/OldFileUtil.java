@@ -1,9 +1,11 @@
 package com.people.common.oldutil;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.channels.FileChannel;
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.people.common.consts.ErrorCode;
 import com.people.common.exception.CustomException;
+import com.people.common.util.CommonUtil;
 import com.people.common.vo.FileVO;
 
 import lombok.AccessLevel;
@@ -136,43 +139,10 @@ public class OldFileUtil {
 		multipartFile.transferTo(targetFile);
 		
 		return targetFile.isFile();
-		/**
-		File originalFile = new File( multipartFile.getOriginalFilename());
-		originalFile.createNewFile(); 
-
-		FileInputStream fis  = null;
-		FileOutputStream fos = null;
-		
-		FileChannel in  = null;
-		FileChannel out = null;
-		
-		if(mkdirs(targetFile.getParent())) {
-			try {
-				fis = new FileInputStream(originalFile);
-				fos = new FileOutputStream(targetFile);
-				
-				//채널생성
-				in = fis.getChannel();
-				out = fos.getChannel();
-				
-				//생성된 채널을 통해 스트림 전송
-				in.transferTo(0, in.size(), out);
-				result = true;
-				
-			} catch (IOException e) {
-				log.error(SystemUtil.getExceptionLog(e));
-			} finally {
-				if( null != out ) try {out.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-				if( null != in  ) try {in.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-				if( null != fos ) try {fos.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-				if( null != fis ) try {fis.close();} catch(IOException e) {log.error(SystemUtil.getExceptionLog(e));}
-			}
-		} else {
-			log.error("Create Directory Error~");
-		}
-		*/
 		
 	}
+	
+
 	
 	/**
 	 * 경로 문자열들을 경로로 조합.

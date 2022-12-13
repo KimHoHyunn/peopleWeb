@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.people.common.consts.ErrorCode;
+import com.people.common.consts.FileType;
 import com.people.common.exception.CustomException;
 import com.people.common.vo.FileVO;
 
@@ -61,6 +62,8 @@ public class FileUtil {
 		public static final String IMAGE 	= ".tif";
 		public static final String INF 		= ".inf";
 	}
+	
+	public static final String ENCODING_CHARSET = "UTF-8";
 
 	public String getFileListByDelimiter(File path, int delimiter) {
 		
@@ -135,47 +138,51 @@ public class FileUtil {
 	
 
 	
-	public boolean create(MultipartFile multipartFile, File targetFile) throws IllegalStateException, IOException {
+	private boolean create(MultipartFile multipartFile, File targetFile) throws IllegalStateException, IOException {
 		mkdirs(targetFile.getParent());
 
 		multipartFile.transferTo(targetFile);
 		
 		return targetFile.isFile();
-		/**
-		File originalFile = new File( multipartFile.getOriginalFilename());
-		originalFile.createNewFile(); 
+	}
 
-		FileInputStream fis  = null;
+	public FileVO create(String text, FileType filePath, String originalName) throws Exception {
+		
+		FileVO fileVO = new FileVO();  
+
+		fileVO.setOrigin_name(originalName);
+		fileVO.setContent_type(filePath.toString().toLowerCase());
+		
+		String fileExt = filePath.getKind();
+        fileVO.setExtension(fileExt);
+		
+    	String saveFileName = createFileName();
+    	fileVO.setSave_name(saveFileName+"."+fileExt);
+    	log.info("--- saveFileName = "+ saveFileName);
+    	
+    	String basePath = propertiesUtil.getFileRootPath();
+    	log.info("--- basePath     = "+ basePath);
+       	String subPath = "/" + makePath(filePath);
+    	log.info("--- subPath     = "+ subPath);
+       	String saveFilePath =basePath+subPath+"/"+saveFileName+"."+fileExt;
+       	log.info("--- saveFilePath = "+ saveFilePath);
+       	
+       	File targetFile = new File(saveFilePath);
+       	fileVO.setSave_path(subPath);
+       	log.info("--- getSave_path = "+ fileVO.getSave_path());
+		
+		
+		mkdirs(targetFile.getParent());
+		
 		FileOutputStream fos = null;
-		
-		FileChannel in  = null;
-		FileChannel out = null;
-		
-		if(mkdirs(targetFile.getParent())) {
-			try {
-				fis = new FileInputStream(originalFile);
-				fos = new FileOutputStream(targetFile);
-				
-				//채널생성
-				in = fis.getChannel();
-				out = fos.getChannel();
-				
-				//생성된 채널을 통해 스트림 전송
-				in.transferTo(0, in.size(), out);
-				result = true;
-				
-			} catch (IOException e) {
-				log.error(commonUtil.getExceptionLog(e));
-			} finally {
-				if( null != out ) try {out.close();} catch(IOException e) {log.error(commonUtil.getExceptionLog(e));}
-				if( null != in  ) try {in.close();} catch(IOException e) {log.error(commonUtil.getExceptionLog(e));}
-				if( null != fos ) try {fos.close();} catch(IOException e) {log.error(commonUtil.getExceptionLog(e));}
-				if( null != fis ) try {fis.close();} catch(IOException e) {log.error(commonUtil.getExceptionLog(e));}
-			}
-		} else {
-			log.error("Create Directory Error~");
+		try {
+			fos = new FileOutputStream(targetFile);
+			fos.write(text.getBytes(ENCODING_CHARSET));
+			fileVO.setSize(targetFile.length());
+		} finally {
+			if(commonUtil.isNotEmpty(fos)) { try{fos.close();} catch(Exception e) {log.error(commonUtil.getExceptionLog(e));}}
 		}
-		*/
+		return fileVO;
 		
 	}
 	
@@ -270,18 +277,29 @@ public class FileUtil {
 		return u.toString();
 	}
 	
-	private String makePath(String baseDir, String fileKind, String fileName) {
+//	private String makePath(String baseDir, String fileKind, String fileName) {
+//		Calendar now = Calendar.getInstance();
+//		String yyyy = String.valueOf(now.get(Calendar.YEAR));
+//		String mm = String.valueOf(now.get(Calendar.MONTH)+1);
+//		String dd = String.valueOf(now.get(Calendar.DATE));
+//		
+//		String path = joinPaths(baseDir, fileKind.toLowerCase(), yyyy, mm, dd, fileName).getPath();
+//		
+//		return commonUtil.safeReplace(path, "\\", "/");
+//	}
+	
+	private String makePath(FileType fileKind) {
 		Calendar now = Calendar.getInstance();
 		String yyyy = String.valueOf(now.get(Calendar.YEAR));
 		String mm = String.valueOf(now.get(Calendar.MONTH)+1);
 		String dd = String.valueOf(now.get(Calendar.DATE));
 		
-		String path = joinPaths(baseDir, fileKind, yyyy, mm, dd, fileName).getPath();
+		String path = joinPaths(fileKind.getDirectoryKind(), yyyy, mm+dd).getPath();
 		
 		return commonUtil.safeReplace(path, "\\", "/");
 	}
 	
-	public FileVO saveFile(MultipartFile originalFile) throws IllegalStateException, IOException, InterruptedException {
+	public FileVO uploadFile(MultipartFile originalFile) throws IllegalStateException, IOException, InterruptedException {
 		
 		log.debug("originalFile = {}", originalFile.getSize());
 		
@@ -307,14 +325,21 @@ public class FileUtil {
     	
     	String basePath = propertiesUtil.getFileRootPath();
     	log.info("--- basePath     = "+ basePath);
-       	String subPath = "/" + makePath(PATH.FILE.toString(),"", "");
+    	
+    	
+    	log.info("--- FilePath.extensionOf(fileExt)     = "+ FileType.extensionOf(fileExt).toString());
+    	String subPath = "/" + makePath(FileType.extensionOf(fileExt));
+    	
+    	
+    	fileVO.setSave_path(subPath);
     	log.info("--- subPath     = "+ subPath);
-       	String saveFilePath =basePath+subPath+"/"+saveFileName+"."+fileExt;
-       	log.info("--- saveFilePath = "+ saveFilePath);
        	
-       	File targetFile = new File(saveFilePath);
-       	fileVO.setSave_path(subPath);
-       	log.info("--- getParent = "+ fileVO.getSave_path());
+//    	String saveFilePath =basePath+subPath+"/"+saveFileName+"."+fileExt;
+       	
+       	File targetFile = joinPaths(basePath, subPath,saveFileName+"."+fileExt);
+       	log.info("--- saveFile               = "+ targetFile.getPath());
+       	log.info("--- saveFilePath in Server = "+ targetFile.getParent());
+       	log.info("--- saveFilePath in DB     = "+ fileVO.getSave_path());
        	create(originalFile, targetFile);
        	
        	return fileVO;

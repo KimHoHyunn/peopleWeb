@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.people.common.consts.ErrorCode;
+import com.people.common.vo.FileVO;
 import com.people.common.vo.ResponseVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +23,12 @@ public class FileUpDownController {
 	@Autowired FileUpDownService fileUpDownService; 
 	
 	@PostMapping("/file/up")
-	public ResponseEntity<ResponseVO> uploadFile(MultipartFile multipartFile) throws Exception {
+	public ResponseVO uploadFile(MultipartFile multipartFile) throws Exception {
 		ResponseVO responseVO = new ResponseVO(ErrorCode.OK); 
 		
-		fileUpDownService.fileUpload(responseVO, multipartFile);
-		log.info("responseVO = {}", responseVO.toStringJson());
-	    return ResponseEntity.ok(responseVO);
+		FileVO fileVO = fileUpDownService.fileUpload(multipartFile);
+		responseVO.setResultData("uploadedFileInfo", fileVO);
+	    return responseVO;
 	}
 	
 	@GetMapping("/file/down/{fid}")

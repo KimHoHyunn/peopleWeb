@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.people.common.consts.ErrorCode;
-import com.people.common.oldutil.OldSystemUtil;
 import com.people.common.util.CommonUtil;
 import com.people.common.util.FileUtil;
 import com.people.common.util.PropertiesUtil;
@@ -28,24 +26,24 @@ public class FileUpDownService {
 	@Autowired PropertiesUtil propertiesUtil;
 	@Autowired CommonUtil commonUtil;
 	
-	public void fileUpload(ResponseVO responseVO, MultipartFile multipartFile) throws IllegalStateException, IOException, InterruptedException {
+	public FileVO fileUpload(MultipartFile multipartFile) throws IllegalStateException, IOException, InterruptedException {
 		
+		FileVO fileVO = null;
 	    if( multipartFile.isEmpty() == false ) {
 	    	
-        	FileVO fileVO = fileUtil.saveFile(multipartFile);
-        	log.info(fileVO.toStringJson());
-//	        	Map<String, String> testMap = BeanUtils.describe(fileVO);
+        	fileVO = fileUtil.uploadFile(multipartFile);
         	
         	//DB 저장
         	fileInfoDao.insertFileInfo(fileVO);
-    		log.info("download file db path = {}", fileVO.getSave_path());
-    		fileVO.setSave_path(propertiesUtil.getFileRootPath()+fileVO.getSave_path());
-    		log.info("download file full path = {}", fileVO.getSave_path());
-        	
-        	responseVO.setResultData("fileUploadInfo", fileVO);
+
 	    }
 		
-//		return responseVO;
+		return fileVO;
+	}
+	
+	public int saveFileInfo(FileVO fileVO) throws Exception {
+		
+        	return fileInfoDao.insertFileInfo(fileVO);
 	}
 	
 	public ResponseEntity<?> fileDownload(HttpServletRequest request, String fid) throws Exception{

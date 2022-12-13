@@ -3,14 +3,14 @@
     <property name="DEF-FILENAME" value="people"/>
     <property name="DEF-PATH" value="${LOG-HOME}/${DEF-FILENAME}"/>
     <property name="DEF-FILE" value="${DEF-PATH}/${DEF-FILENAME}.log"/>
-    <property name="CONSOLE-PATTERN" value="[%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n"/>
+    <property name="Console-PATTERN" value="[%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n"/>
     <property name="LOG-PATTERN" value="%d %p %c{1.} [%t] %m%n"/>
     
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
                 <!--%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n-->
-                <pattern>${CONSOLE-PATTERN}</pattern>
+                <pattern>${Console-PATTERN}</pattern>
             </Pattern>
         </layout>
     </appender>
@@ -33,7 +33,7 @@
         </encoder>
     </appender>    
     <logger name="com.people" level="debug" additivity="false">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="Console"/>
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
     
@@ -62,7 +62,7 @@
         </encoder>
     </appender>
     <logger name="com.people.sample.async" level="debug" additivity="false">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="Console"/>
         <appender-ref ref="FILE-ROLLING-ASYNC"/>
     </logger>
     
@@ -88,7 +88,7 @@
         </encoder>
     </appender>
     <logger name="com.people.sample.jms" level="debug" additivity="false">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="Console"/>
         <appender-ref ref="FILE-ROLLING-JMS"/>
     </logger>
     
@@ -114,13 +114,65 @@
         </encoder>
     </appender>   
     <logger name="com.people.sample.restapi" level="debug" additivity="false">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="Console"/>
         <appender-ref ref="FILE-ROLLING-API"/>
     </logger> 
+<!--
+sqlonly	
+	SQL을 로그로 남기며, Prepared Statement와 관련된 파라미터는 자동으로 변경되어 SQL을 출력합니다.
+sqltiming	
+	SQL과 SQL 실행 시간(milliseconds 단위)을 출력합니다.
+audit	
+	ResultSet을 제외한 모든 JDBC 호출 정보를 출력합니다.
+	JDBC 관련 문제를 추적하는 경우를 제외하고는 사용이 권장되지 않습니다.
+resultset	
+	ResultSet을 포함한 모든 JDBC 호출 정보를 출력합니다.
+resultsettable	
+	SQL 조회 결과를 테이블 형태로 출력합니다.
+connection	
+	Connection의 연결과 종료에 관련된 로그를 출력합니다.
+	커넥션 누수 문제 해결에 도움이 됩니다.
+    <logger name="jdbc.sqlonly" level="INFO" appender-ref="Console" />
+    <logger name="jdbc.resultsettable" level="INFO" appender-ref="Console" />
+    <logger name="jdbc.audit" level="error" appender-ref="Console" />
+    <logger name="jdbc.resultset" level="error" appender-ref="Console" />
+    <logger name="jdbc.connection" level="error" appender-ref="Console" />
+-->
+    <!-- Log everything in Spring Boot -->
+	<logger name="org.springframework.boot" level="info" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+      
+    <!-- Log everything in Spring Core -->
+	<logger name="org.springframework.core" level="info" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+  
+    <!-- jdbc log -->
+	<logger name="jdbc.sqlonly" level="error" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+	<logger name="jdbc.sqltiming" level="info" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+	<logger name="jdbc.audit" level="error" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+	<logger name="jdbc.resultset" level="error" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+	<!-- 로그로 데이터 결과값 보고 싶은 경우 info로 level 변경 -->
+	<logger name="jdbc.resultsettable" level="error" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+	<logger name="jdbc.connection" level="error" additivity="false">
+		<appender-ref ref="Console" />
+	</logger>
+
     
 
     <root level="info">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="Console"/>
         <appender-ref ref="FILE-ROLLING"/>
         <!-- 이걸 주석 처리하니까 logger에서 정의된 패키지가 실행되는 실행로그만 쌓임. 신기하네~
         <appender-ref ref="FILE-ROLLING-SAMPLE"/>

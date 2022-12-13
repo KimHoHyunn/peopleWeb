@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.people.common.consts.FileType;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,10 @@ public class PropertiesUtil {
 	}
 	
 	public String getFileRootPath () throws IOException {
-		return getProperties("file.root.dir");
+		return getProperties("FILE-ROOT-DIRECTORY");
+	}
+	public String getFilePath (FileType filePath) throws IOException {
+		return getProperties("FILE-"+filePath.toString()+"-DIRECTORY");
 	}
 	
 	public String getCustomPropIs () throws IOException {
