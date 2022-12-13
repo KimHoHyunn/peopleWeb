@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.people.common.config.DatabaseProperties;
+import com.people.common.consts.ErrorCode;
 import com.people.common.util.CommonUtil;
+import com.people.common.vo.ResponseVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -71,14 +74,27 @@ public class RestApiController {
     }
 	
 	@PostMapping(path = "/rest/voparam")
-    public ResponseEntity<?>  restApiVoParam(RestApiVO restApiVO) {
-		
+    public ResponseVO  restApiVoParam(RestApiVO restApiVO) {
+		ResponseVO responseVO = new ResponseVO(ErrorCode.OK);
+
 		Map<String, Object> params = new HashMap<String, Object>();
 		if(commonUtil.isNotEmpty(restApiVO.getAa())) params.put("aa",restApiVO.getAa());
 		if(commonUtil.isNotEmpty(restApiVO.getBb())) params.put("bb",restApiVO.getBb());
-		List<Map<String, Object>> ret = restApiService.getData(params);
-		
-		return ResponseEntity.ok().body(ret);
+
+		responseVO.setResultData(restApiService.getData(params));
+		return responseVO;
+    }
+	
+	@PostMapping(path = "/rest/property")
+    public ResponseVO  getDBProperties() {
+		ResponseVO responseVO = new ResponseVO(ErrorCode.OK);
+//		DatabaseProperties databaseProperties = new DatabaseProperties();
+//		responseVO.setResultData(databaseProperties.getDriverClassName());
+//		responseVO.setResultData(databaseProperties.getJndiName());
+//		responseVO.setResultData(databaseProperties.getUrl());
+//		responseVO.setResultData(databaseProperties.getUsername());
+//		responseVO.setResultData(databaseProperties.getPassword());
+		return responseVO;
     }
 	
 }

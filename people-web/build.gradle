@@ -87,9 +87,13 @@ dependencies {
 	implementation 'org.jdom:jdom:2.0.2'
 	
 	//MySQL 
-	runtimeOnly 'mysql:mysql-connector-java'
-	implementation 'mysql:mysql-connector-java'
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	implementation 'mysql:mysql-connector-java:8.0.31'
 	
+	//jndi 설정때문에 추가함
+	// https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jdbc
+	implementation 'org.apache.tomcat:tomcat-jdbc:10.1.2'
+
 	//Query Log
 	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'

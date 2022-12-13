@@ -93,7 +93,7 @@ public class RestAPIConnect {
 		
         RestTemplate restTemplate = new RestTemplate();
         
-        String url = propertiesUtil.getReatAptUrl();
+        String url = "";//propertiesUtil.getReatAptUrl();
         
         String imageFileString = getBase64String(file);
 

@@ -41,6 +41,12 @@ public class ResponseVO {
 		this.resultData.add(map);
 	}
 	
+	public void setResultData(Object resultObject) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("resultData", resultObject);
+		this.resultData.add(map);
+	}
+	
 
     public String toStringDefault() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
