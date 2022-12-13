@@ -23,7 +23,7 @@ public class ApiCallController {
 	@Autowired ApiUtil apiUtil;
 
 	@GetMapping("/apicall")
-    public ResponseEntity<ResponseVO> apicall(@RequestParam String aa) throws Exception {
+    public ResponseVO apicall(@RequestParam String aa) throws Exception {
 		//웬만하면 메소드명 출력은 자제하자
 		//오버헤드가 장난 아니기 때문에 실제 개발용으로는 비추.
 		log.info(new Object() {}.getClass().getName());
@@ -48,6 +48,6 @@ public class ApiCallController {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
         
-		return ResponseEntity.ok(responseVO);
+		return responseVO;
     }
 }
