@@ -7,8 +7,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 public enum FileType {
-	
-	      CONFIG("config","properties")
+	      DEFAULT("etc","")
+	    , CONFIG("config","properties")
 		, TSA("pdf", "tsa")
 		, IDX("pdf", "idx")
 		, TIF("pdf", "tif")

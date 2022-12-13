@@ -27,24 +27,11 @@ public class PropertiesUtil {
 		return env.getRequiredProperty(name);
 	}
 	
-	public String getCommonPropIs () throws IOException {
-		return getProperties("common.prop.is");
-	}
-	
 	public String getFileRootPath () throws IOException {
 		return getProperties("FILE-ROOT-DIRECTORY");
 	}
-	public String getFilePath (FileType filePath) throws IOException {
-		return getProperties("FILE-"+filePath.toString()+"-DIRECTORY");
+	public String getFilePath (FileType fileType) throws IOException {
+		return getProperties("FILE-"+fileType.toString()+"-DIRECTORY");
 	}
-	
-	public String getCustomPropIs () throws IOException {
-		return getProperties("custom.prop.is");
-	}
-	
-	public String getReatAptUrl() throws IOException {
-		return getProperties("REAT_APT_URL");
-	}
-	
 	
 }
