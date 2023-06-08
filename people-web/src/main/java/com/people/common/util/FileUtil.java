@@ -404,4 +404,47 @@ public class FileUtil {
 			throw new CustomException(ErrorCode.FILEDATA_NOT_FOUND);
 		}
 	}
+	
+	/**
+	 * file이 디렉토리일 경우 자기를 포함함 하위 디렉토리, 파일까지 모두 삭제한다.
+	 * @param file
+	 */
+	public void delete(File fileOrDir) {
+		if(fileOrDir.isFile()) {
+			if(fileOrDir.delete()) {
+				log.info(" > remove : "+fileOrDir.getAbsoluteFile().getPath());
+			} else {
+				log.info(" > fail to remove : "+fileOrDir.getAbsoluteFile().getPath());
+			}
+		} else {
+			deleteAll(fileOrDir);
+		}
+	}
+	
+	private void deleteAll(File file) {
+		try {
+			if(file.exists() == false) {
+				log.error("Not Found.");
+			} else {
+				if(file.isDirectory()) {
+					
+					File[] files = file.listFiles();
+					
+					if(commonUtil.isNotEmpty(files)) {
+						for(File entry : files) {
+							deleteAll(entry);
+						}
+					}
+				}
+				
+				if(file.delete()) {
+					log.info(" > remove : "+file.getAbsoluteFile().getPath());
+				} else {
+					log.info(" > fail to remove : "+file.getAbsoluteFile().getPath());
+				}
+			}
+		} catch (Exception e) {
+			log.error(commonUtil.getExceptionLog(e));
+		}
+	}
 }

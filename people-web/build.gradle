@@ -106,6 +106,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/javax.jms/javax.jms-api
 	implementation 'javax.jms:javax.jms-api:2.0'
 	
+	// https://mvnrepository.com/artifact/org.apache.directory.studio/org.apache.commons.io
+    implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
+	
+	
 
 	
 }
